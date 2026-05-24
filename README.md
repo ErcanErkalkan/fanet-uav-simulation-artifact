@@ -2,6 +2,10 @@
 
 This repository contains the executable code and reproducible data artifact for a Python-based FANET UAV simulation framework. It excludes manuscript source files, review notes, and writing-only material.
 
+Persistent archive: https://doi.org/10.5281/zenodo.20369732
+
+GitHub repository: https://github.com/ErcanErkalkan/fanet-uav-simulation-artifact
+
 ## Contents
 
 - `FANET_UAV/*.py`: simulation, routing, wireless-channel, trace-replay, and optional logging scripts.
@@ -166,3 +170,9 @@ The included numerical outputs are generated from deterministic seeds and bundle
 ## License
 
 Code is licensed under the MIT License. Data files are licensed under CC BY 4.0; see `DATA_LICENSE`.
+
+## Citation
+
+Use the metadata in `CITATION.cff` or cite the archived Zenodo record:
+
+Erkalkan, E. (2026). FANET UAV Simulation Artifact. Zenodo. https://doi.org/10.5281/zenodo.20369732

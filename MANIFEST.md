@@ -5,8 +5,8 @@ Generated SHA-256 checksums for packaged source and data files.
 | File | Bytes | SHA-256 |
 | --- | ---: | --- |
 | `.gitignore` | 253 | `6d6c8d74bcf792452b29e2d504a6b41b9492cb6ac3e281a36579ee8bb3701072` |
-| `.zenodo.json` | 1267 | `6ab50b7a84b5e92cf0deecd3fe87e6125f300f868d38810f02e5753ea8b7a3b3` |
-| `CITATION.cff` | 860 | `ccd16bf9a10b7210466a67497a31ae1e9b4cb77244171e9f10fe6894ff321d55` |
+| `.zenodo.json` | 1313 | `eba164ba1edf1dc42b0be97a73a7dffd8bd9c34b1b07fb8ac0877b57ac710682` |
+| `CITATION.cff` | 938 | `01f133d729f91dda452804cc1f3ff040edc24ec3a35f5fa30cc106f20beb9c39` |
 | `DATA_LICENSE` | 493 | `0dd18b8fb1b4c6cb141add9b1d306d93a1b4c5a81786c9b4b25c36eea12827f1` |
 | `FANET_UAV/airsim_trajectory_logger.py` | 6408 | `296db1f5f5ba070b1babb68eefc5f03c59b08590ca4d8f1a208c5d7342dfed22` |
 | `FANET_UAV/fanet_results.csv` | 597 | `944f035cdf5ee13da83e631d905c2bc92faf32b2e6bc1af678a350905b67d208` |
@@ -30,5 +30,5 @@ Generated SHA-256 checksums for packaged source and data files.
 | `FANET_UAV/tello_square_plan.csv` | 112 | `36ca93ceda593f6188464f024926537f243a9e8882ce0ae2f5bfb06596ef8a54` |
 | `FANET_UAV/tello_validation_logger.py` | 8705 | `84d40c51c3f9bfdc930d4daaff9d979411dc013feb8071d538ad7fad397e9406` |
 | `LICENSE` | 1071 | `2e1e832bc7a67a020a4e9560e2cbe147aaf1ccfae60bbe32ab96e0e96ee0c614` |
-| `README.md` | 4405 | `385f57307ebe0b6828ea2682011a06ed05ca9bef5e1b4b2863efcbfda5502030` |
+| `README.md` | 4735 | `d48f1100fb8aebf48fd008fee67853f6c0f33f6b49d45078a7a0ef26a3d678ec` |
 | `requirements.txt` | 262 | `0bbd927670366b04679b0912e9171cfcbc89573932669bb8ecd936966ac660e0` |

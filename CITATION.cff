@@ -5,6 +5,8 @@ version: "1.0.0"
 date-released: "2026-05-24"
 type: software
 license: MIT
+doi: "10.5281/zenodo.20369732"
+url: "https://doi.org/10.5281/zenodo.20369732"
 authors:
   - family-names: "ERKALKAN"
     given-names: "Ercan"
@@ -19,4 +21,4 @@ keywords:
   - simulation
   - Python
 abstract: "Executable Python code and reproducible CSV data for a FANET-based UAV simulation framework with synthetic mobility, AirSim-compatible trace replay, routing abstractions, probabilistic wireless-channel metrics, and optional physical logging interfaces."
-repository-code: "https://github.com/ercanerkalkan/fanet-uav-simulation-artifact"
+repository-code: "https://github.com/ErcanErkalkan/fanet-uav-simulation-artifact"
