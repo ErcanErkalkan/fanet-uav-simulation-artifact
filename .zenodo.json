@@ -23,5 +23,13 @@
   "access_right": "open",
   "version": "1.0.0",
   "language": "eng",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/ercanerkalkan/fanet-uav-simulation-artifact",
+      "relation": "isSupplementTo",
+      "scheme": "url",
+      "resource_type": "software"
+    }
+  ],
   "notes": "The repository intentionally excludes manuscript source files and writing-only review material. Bundled CSV outputs and sample traces are included for reproducibility; data files are also marked as CC BY 4.0 in DATA_LICENSE."
 }

@@ -19,3 +19,4 @@ keywords:
   - simulation
   - Python
 abstract: "Executable Python code and reproducible CSV data for a FANET-based UAV simulation framework with synthetic mobility, AirSim-compatible trace replay, routing abstractions, probabilistic wireless-channel metrics, and optional physical logging interfaces."
+repository-code: "https://github.com/ercanerkalkan/fanet-uav-simulation-artifact"
