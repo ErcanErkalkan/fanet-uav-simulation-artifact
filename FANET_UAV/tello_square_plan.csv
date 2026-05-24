@@ -1,0 +1,7 @@
+delay_s,command,expected_distance_cm
+2,takeoff,
+3,forward 50,50
+2,right 50,50
+2,back 50,50
+2,left 50,50
+2,land,

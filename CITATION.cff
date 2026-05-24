@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software artifact, please cite it using the metadata below."
+title: "FANET UAV Simulation Artifact"
+version: "1.0.0"
+date-released: "2026-05-24"
+type: software
+license: MIT
+authors:
+  - family-names: "ERKALKAN"
+    given-names: "Ercan"
+    affiliation: "Department of Computer Technologies, Marmara University, Vocational School of Technical Sciences"
+keywords:
+  - FANET
+  - UAV
+  - AirSim
+  - routing
+  - wireless networks
+  - trace replay
+  - simulation
+  - Python
+abstract: "Executable Python code and reproducible CSV data for a FANET-based UAV simulation framework with synthetic mobility, AirSim-compatible trace replay, routing abstractions, probabilistic wireless-channel metrics, and optional physical logging interfaces."

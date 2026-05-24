@@ -1,0 +1,7 @@
+# Core benchmark scripts use only the Python standard library.
+#
+# Optional dependencies:
+# - matplotlib: only used by fanet_simulator_core.py for an optional plot.
+# - airsim: only required when collecting new AirSim trajectories.
+matplotlib>=3.8
+airsim>=1.8.1

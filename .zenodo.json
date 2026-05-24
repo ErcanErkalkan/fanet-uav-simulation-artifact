@@ -1,0 +1,27 @@
+{
+  "title": "FANET UAV Simulation Artifact",
+  "upload_type": "software",
+  "description": "Executable Python code and reproducible CSV data for a FANET-based UAV simulation framework with synthetic mobility, AirSim-compatible trace replay, routing abstractions, probabilistic wireless-channel metrics, and optional physical logging interfaces.",
+  "creators": [
+    {
+      "name": "ERKALKAN, Ercan",
+      "affiliation": "Department of Computer Technologies, Marmara University, Vocational School of Technical Sciences"
+    }
+  ],
+  "keywords": [
+    "FANET",
+    "UAV",
+    "AirSim",
+    "wireless networks",
+    "routing",
+    "trace replay",
+    "simulation",
+    "Python",
+    "reproducibility"
+  ],
+  "license": "mit-license",
+  "access_right": "open",
+  "version": "1.0.0",
+  "language": "eng",
+  "notes": "The repository intentionally excludes manuscript source files and writing-only review material. Bundled CSV outputs and sample traces are included for reproducibility; data files are also marked as CC BY 4.0 in DATA_LICENSE."
+}

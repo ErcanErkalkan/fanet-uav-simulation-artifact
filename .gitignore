@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local generated outputs that are not part of the reproducibility bundle.
+*.log
+*.tmp
+tello_run_*/
+airsim_trajectory_*.csv
+
+# OS/editor files.
+.DS_Store
+Thumbs.db
+*.swp

@@ -1,0 +1,2 @@
+trace_file,source,num_uavs,samples,duration_s,sample_rate_hz,communication_range_m,packet_attempts,delivered_packets,pdr,mean_latency_ms,std_latency_ms,mean_hops,topology_changes_per_s,mean_link_lifetime_s,throughput_packets_s
+sample_airsim_trajectory_3uav.csv,airsim-compatible-sample,3,151,30.0,5.033333333333333,35.0,755,755,1.0,14.009457435943089,0.8679411538802395,1,0.1,30.0,25.166666666666668
