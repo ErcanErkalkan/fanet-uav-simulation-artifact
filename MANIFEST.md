@@ -29,6 +29,10 @@ Generated SHA-256 checksums for packaged source and data files.
 | `FANET_UAV/sample_airsim_trajectory_3uav.csv` | 47177 | `76a57974661ea3b4544eaed05c4b296362fd388c4064550e74f1265c05fdb7f5` |
 | `FANET_UAV/tello_square_plan.csv` | 112 | `36ca93ceda593f6188464f024926537f243a9e8882ce0ae2f5bfb06596ef8a54` |
 | `FANET_UAV/tello_validation_logger.py` | 8705 | `84d40c51c3f9bfdc930d4daaff9d979411dc013feb8071d538ad7fad397e9406` |
+| `figures/fanet_sensitivity_pdr.png` | 69502 | `bc3b655acfcce737f9fb394d65932f63f4697744187336cc02488c8b2998ee36` |
+| `figures/fanet_trace_topology.png` | 136039 | `528154f3cce726779e8d823788fec4a5598de5f76c3113784b22273c48a94eeb` |
+| `figures/fanet_unified_pipeline.png` | 73999 | `e8d513e7972b89e903ae57be43a955d85eb095152c2e511d3728db25ac2a5fc3` |
+| `figures/fanet_wireless_comparison.png` | 74116 | `ced97838ee1ed0b2e847f9b7e7abc1e968a9f0ae52701091743ee6255513418d` |
 | `LICENSE` | 1071 | `2e1e832bc7a67a020a4e9560e2cbe147aaf1ccfae60bbe32ab96e0e96ee0c614` |
-| `README.md` | 4735 | `d48f1100fb8aebf48fd008fee67853f6c0f33f6b49d45078a7a0ef26a3d678ec` |
+| `README.md` | 4817 | `7463ff02873559ed6f327fee3a37393e4998619cffe437be88840694ed1f7deb` |
 | `requirements.txt` | 262 | `0bbd927670366b04679b0912e9171cfcbc89573932669bb8ecd936966ac660e0` |
