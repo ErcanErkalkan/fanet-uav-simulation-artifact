@@ -1,0 +1,73 @@
+@startuml fanet_architecture_plantuml
+!pragma layout smetana
+
+skinparam backgroundColor #FFFFFF
+skinparam dpi 240
+skinparam shadowing false
+skinparam roundcorner 18
+skinparam componentStyle rectangle
+skinparam defaultFontName Arial
+skinparam defaultFontSize 13
+skinparam ArrowColor #374151
+skinparam ArrowThickness 1.4
+skinparam RectangleBorderThickness 1.2
+skinparam PackageBorderThickness 1.2
+skinparam PackageFontStyle bold
+skinparam PackageFontSize 14
+
+skinparam rectangle {
+  BorderColor #334155
+  FontColor #111827
+}
+
+skinparam package {
+  BorderColor #64748B
+  FontColor #111827
+  BackgroundColor #F8FAFC
+}
+
+top to bottom direction
+
+rectangle "<b>Scenario Configuration</b>\nUAV count | area | altitude\nrange | duration | traffic | seed" as Scenario #E0F2FE
+
+package "Mobility and Validation Sources" as Sources {
+  rectangle "<b>Synthetic Mobility</b>\nbounded / waypoint\nGauss-Markov" as Synthetic #FEF3C7
+  rectangle "<b>AirSim / Unreal Trace</b>\ntrajectory CSV\nposition + velocity" as AirSim #DCFCE7
+  rectangle "<b>DJI Tello Logs</b>\noptional validation\ncommand delay + telemetry" as Tello #F3E8FF
+
+  Synthetic -right[hidden]- AirSim
+  AirSim -right[hidden]- Tello
+}
+
+package "Unified FANET Core Pipeline" as Core {
+  rectangle "<b>1. UAV State Manager</b>\ntime-indexed node states\nid, position, velocity, altitude" as State #DBEAFE
+  rectangle "<b>2. Link Model</b>\nbinary range or probabilistic channel\npath loss, SINR, reliability" as Link #D1FAE5
+  rectangle "<b>3. Routing Abstraction</b>\noracle | AODV-like | OLSR-like | greedy\nselected path or failure" as Routing #FFEDD5
+  rectangle "<b>4. Experiment Engine</b>\nevent loop and packet attempts\nrepetitions, deterministic seeds" as Engine #FEE2E2
+  rectangle "<b>5. Metric Collector</b>\nPDR, latency, throughput, energy\nconnectivity and route events" as Metrics #EDE9FE
+
+  State -right-> Link
+  Link -right-> Routing
+  Routing -down-> Engine
+  Engine -left-> Metrics
+}
+
+database "<b>Raw and Summary CSV Outputs</b>\nraw rows + aggregate tables" as Csv #ECFDF5
+rectangle "<b>Reproducible Artifact</b>\nfigures | manifest | GitHub | Zenodo" as Artifact #F1F5F9
+
+Scenario -down-> Synthetic : scenario settings
+Scenario -down-> AirSim : replay settings
+Scenario -down-> Tello : validation settings
+
+Synthetic -down-> State : generated states
+AirSim -down-> State : trace frames
+Tello -down-> Metrics
+Metrics -down-> Csv
+Csv -down-> Artifact : archived data
+
+legend bottom
+  <b>Scope boundary:</b> physical Tello logs support timing validation only;
+  network replay from physical flights requires externally localized trajectories.
+endlegend
+
+@enduml

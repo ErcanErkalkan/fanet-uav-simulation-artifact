@@ -10,7 +10,8 @@ GitHub repository: https://github.com/ErcanErkalkan/fanet-uav-simulation-artifac
 
 - `FANET_UAV/*.py`: simulation, routing, wireless-channel, trace-replay, and optional logging scripts.
 - `FANET_UAV/*.csv`: generated raw and summary outputs, sample AirSim-compatible trajectory data, and sample replay outputs.
-- `figures/*.png`: manuscript figures generated from the distributed CSV outputs.
+- `figures/*.png`: manuscript figures generated from the distributed CSV outputs and the PlantUML architecture source.
+- `figures/*.puml`: editable PlantUML source for the colored architecture diagram.
 - `requirements.txt`: optional Python package dependencies.
 - `.zenodo.json`: Zenodo release metadata.
 - `CITATION.cff`: citation metadata for GitHub and Zenodo.
