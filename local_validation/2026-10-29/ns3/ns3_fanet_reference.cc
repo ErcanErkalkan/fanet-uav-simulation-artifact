@@ -128,9 +128,12 @@ struct PacketObservation
     ScheduledPacket scheduled;
     bool applicationGenerated{false};
     bool socketAccepted{false};
+    int32_t socketErrnoCode{-1};
+    std::string socketErrnoSymbol{"NOT_APPLICABLE"};
     uint32_t receiveCount{0};
     double firstReceiveSeconds{std::nan("")};
     double scheduledSendSeconds{std::nan("")};
+    uint32_t physicalMinimumHops{0};
 };
 
 struct RunState
@@ -151,8 +154,40 @@ struct RunState
     uint32_t seed{0};
     uint32_t run{0};
     double warmupSeconds{0.0};
+    double rangeMeters{35.0};
     bool lastEvaluationSet{false};
     double lastEvaluationSeconds{0.0};
+
+    uint32_t MinimumPhysicalHops(uint32_t source, uint32_t destination) const
+    {
+        std::vector<int32_t> distance(mobility.size(), -1);
+        std::vector<uint32_t> frontier{source};
+        distance.at(source) = 0;
+        for (std::size_t cursor = 0; cursor < frontier.size(); ++cursor)
+        {
+            const uint32_t current = frontier[cursor];
+            if (current == destination)
+            {
+                return static_cast<uint32_t>(distance[current]);
+            }
+            for (uint32_t neighbor = 0; neighbor < mobility.size(); ++neighbor)
+            {
+                if (distance[neighbor] >= 0)
+                {
+                    continue;
+                }
+                const Vector delta =
+                    mobility[current]->GetPosition() - mobility[neighbor]->GetPosition();
+                if (std::sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z) <=
+                    rangeMeters)
+                {
+                    distance[neighbor] = distance[current] + 1;
+                    frontier.push_back(neighbor);
+                }
+            }
+        }
+        return 0;
+    }
 
     void ApplySnapshot(double timeSeconds)
     {
@@ -178,6 +213,45 @@ struct RunState
         lastEvaluationSeconds = timeSeconds;
     }
 };
+
+const char*
+SocketErrnoName(Socket::SocketErrno error)
+{
+    switch (error)
+    {
+    case Socket::ERROR_NOTERROR:
+        return "ERROR_NOTERROR";
+    case Socket::ERROR_ISCONN:
+        return "ERROR_ISCONN";
+    case Socket::ERROR_NOTCONN:
+        return "ERROR_NOTCONN";
+    case Socket::ERROR_MSGSIZE:
+        return "ERROR_MSGSIZE";
+    case Socket::ERROR_AGAIN:
+        return "ERROR_AGAIN";
+    case Socket::ERROR_SHUTDOWN:
+        return "ERROR_SHUTDOWN";
+    case Socket::ERROR_OPNOTSUPP:
+        return "ERROR_OPNOTSUPP";
+    case Socket::ERROR_AFNOSUPPORT:
+        return "ERROR_AFNOSUPPORT";
+    case Socket::ERROR_INVAL:
+        return "ERROR_INVAL";
+    case Socket::ERROR_BADF:
+        return "ERROR_BADF";
+    case Socket::ERROR_NOROUTETOHOST:
+        return "ERROR_NOROUTETOHOST";
+    case Socket::ERROR_NODEV:
+        return "ERROR_NODEV";
+    case Socket::ERROR_ADDRNOTAVAIL:
+        return "ERROR_ADDRNOTAVAIL";
+    case Socket::ERROR_ADDRINUSE:
+        return "ERROR_ADDRINUSE";
+    case Socket::SOCKET_ERRNO_LAST:
+        return "SOCKET_ERRNO_LAST";
+    }
+    return "UNKNOWN_SOCKET_ERRNO";
+}
 
 class PacketIdentityHeader : public Header
 {
@@ -322,6 +396,8 @@ class ScheduledUdpApplication : public Application
 
         it->second.applicationGenerated = true;
         it->second.scheduledSendSeconds = Simulator::Now().GetSeconds();
+        it->second.physicalMinimumHops =
+            m_state->MinimumPhysicalHops(event.source, event.destination);
         ++m_state->generatedPackets;
 
         Ptr<Packet> packet = Create<Packet>(m_packetBytes - kPacketIdHeaderBytes);
@@ -334,6 +410,12 @@ class ScheduledUdpApplication : public Application
         {
             it->second.socketAccepted = true;
             ++m_state->socketAcceptedPackets;
+        }
+        else
+        {
+            const Socket::SocketErrno error = m_sendSocket->GetErrno();
+            it->second.socketErrnoCode = static_cast<int32_t>(error);
+            it->second.socketErrnoSymbol = SocketErrnoName(error);
         }
     }
 
@@ -574,13 +656,15 @@ WriteOutputs(const std::string& summaryPath,
              double drainSeconds,
              uint32_t packetBytes,
              uint32_t totalFrames,
-             double measurementSeconds)
+             double measurementSeconds,
+             double rangeMeters)
 {
-    monitor->CheckForLostPackets(Seconds(0));
+    monitor->CheckForLostPackets();
     const auto classifier = DynamicCast<Ipv4FlowClassifier>(flowHelper.GetClassifier());
     uint64_t flowTx = 0;
     uint64_t flowRx = 0;
     uint64_t flowLost = 0;
+    uint64_t flowReportedDrops = 0;
     uint64_t forwarded = 0;
     double flowDelaySeconds = 0.0;
     const auto statsByFlow = monitor->GetFlowStats();
@@ -594,9 +678,19 @@ WriteOutputs(const std::string& summaryPath,
         flowTx += stats.txPackets;
         flowRx += stats.rxPackets;
         flowLost += stats.lostPackets;
+        for (const uint32_t dropped : stats.packetsDropped)
+        {
+            flowReportedDrops += dropped;
+        }
         forwarded += stats.timesForwarded;
         flowDelaySeconds += stats.delaySum.GetSeconds();
     }
+    if (flowLost < flowReportedDrops)
+    {
+        throw std::runtime_error(
+            "FlowMonitor reported-drop count exceeds lostPackets");
+    }
+    const uint64_t flowPendingTimeout = flowLost - flowReportedDrops;
 
     uint32_t uniqueReceived = 0;
     double applicationDelaySum = 0.0;
@@ -637,9 +731,11 @@ WriteOutputs(const std::string& summaryPath,
                "measurement_s,warmup_s,drain_s,packet_bytes,scheduled_packets,"
                "application_generated_packets,socket_accepted_packets,socket_rejected_packets,"
                "flowmonitor_tx_packets,"
-               "flowmonitor_rx_packets,application_unique_delivered_packets,"
+               "flowmonitor_rx_packets,flowmonitor_lost_packets,"
+               "flowmonitor_reported_drop_packets,flowmonitor_pending_timeout_packets,"
+               "application_unique_delivered_packets,"
                "application_duplicate_receives,invalid_packet_receives,"
-               "undelivered_after_drain_packets,flowmonitor_lost_packets,pdr,"
+               "undelivered_after_drain_packets,pdr,"
                "mean_application_delay_ms,mean_flowmonitor_delay_ms,times_forwarded,"
                "forwarding_based_hops_estimate,control_messages,control_bytes\n";
     summary << state->experiment << ',' << state->routing << ',' << state->profile << ','
@@ -650,9 +746,10 @@ WriteOutputs(const std::string& summaryPath,
             << packetBytes << ',' << schedule.size() << ',' << state->generatedPackets << ','
             << state->socketAcceptedPackets << ','
             << (state->generatedPackets - state->socketAcceptedPackets) << ','
-            << flowTx << ',' << flowRx << ','
-            << uniqueReceived << ',' << state->duplicateReceives << ',' << state->invalidReceives
-            << ',' << undelivered << ',' << flowLost << ',' << pdr << ',';
+            << flowTx << ',' << flowRx << ',' << flowLost << ',' << flowReportedDrops << ','
+            << flowPendingTimeout << ',' << uniqueReceived << ','
+            << state->duplicateReceives << ',' << state->invalidReceives << ',' << undelivered
+            << ',' << pdr << ',';
     if (std::isfinite(appDelayMs))
     {
         summary << appDelayMs;
@@ -691,7 +788,10 @@ WriteOutputs(const std::string& summaryPath,
              "generation_time_s,evaluated_at_time_s,packet_bytes,application_generated,"
              "socket_accepted,application_receive_count,delivered_same_id,"
              "scheduled_send_ns_time,receive_ns_time,application_latency_ms,"
-             "loss_reason\n";
+             "loss_reason,simulation_send_time_s,simulation_receive_time_s,"
+             "socket_errno_code,socket_errno_symbol,physical_minimum_hops_at_send,"
+             "route_table_status,interference_transmission_evidence,warmup_s,drain_s,"
+             "range_m,measurement_phase\n";
     for (const auto& event : schedule)
     {
         const auto& observation = state->packets.at(event.packetId);
@@ -737,7 +837,47 @@ WriteOutputs(const std::string& summaryPath,
                             : !observation.socketAccepted
                                   ? "socket_send_rejected;cause_unattributed"
                                   : "undelivered_within_drain;cause_unattributed")
-              << '\n';
+              << ',' << std::setprecision(12);
+        if (std::isfinite(observation.scheduledSendSeconds))
+        {
+            audit << observation.scheduledSendSeconds;
+        }
+        else
+        {
+            audit << "NA";
+        }
+        audit << ',';
+        if (delivered)
+        {
+            audit << observation.firstReceiveSeconds;
+        }
+        else
+        {
+            audit << "NA";
+        }
+        audit << ',' << observation.socketErrnoCode << ','
+              << observation.socketErrnoSymbol << ',';
+        if (observation.physicalMinimumHops > 0)
+        {
+            audit << observation.physicalMinimumHops;
+        }
+        else if (observation.applicationGenerated)
+        {
+            audit << "NO_PHYSICAL_PATH";
+        }
+        else
+        {
+            audit << "NA";
+        }
+        const double measurementStart = state->warmupSeconds;
+        const double measurementEnd = measurementStart + measurementSeconds;
+        const double eventTime = observation.scheduledSendSeconds;
+        const std::string phase = !std::isfinite(eventTime) ? "not_generated"
+                                  : eventTime < measurementStart ? "warmup"
+                                  : eventTime < measurementEnd ? "measurement"
+                                                               : "drain";
+        audit << ",not_instrumented,not_instrumented," << state->warmupSeconds << ','
+              << drainSeconds << ',' << rangeMeters << ',' << phase << '\n';
     }
 }
 } // namespace
@@ -809,6 +949,7 @@ main(int argc, char* argv[])
         state->seed = seed;
         state->run = run;
         state->warmupSeconds = warmupSeconds;
+        state->rangeMeters = rangeMeters;
         for (auto& frame : mobilityFrames)
         {
             state->frames.emplace(TimeKey(frame.timeSeconds), std::move(frame));
@@ -928,7 +1069,8 @@ main(int argc, char* argv[])
                      drainSeconds,
                      packetBytes,
                      static_cast<uint32_t>(state->frames.size()),
-                     measurementSeconds);
+                     measurementSeconds,
+                     rangeMeters);
         Simulator::Destroy();
         std::cout << "completed," << experiment << ',' << routing << ',' << seed << ','
                   << run << ',' << schedule.size() << ',' << state->generatedPackets << ','
