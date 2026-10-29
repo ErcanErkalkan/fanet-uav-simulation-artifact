@@ -1,0 +1,22 @@
+[
+  {
+    "group": "R1_metrics_and_real_AirSim",
+    "exit": 0,
+    "tests": 21
+  },
+  {
+    "group": "ns3_input_validation",
+    "exit": 0,
+    "tests": 6
+  },
+  {
+    "group": "PROMPT06_diagnostics",
+    "exit": 0,
+    "tests": 4
+  },
+  {
+    "group": "C_flowmonitor_final",
+    "exit": 0,
+    "tests": 18
+  }
+]

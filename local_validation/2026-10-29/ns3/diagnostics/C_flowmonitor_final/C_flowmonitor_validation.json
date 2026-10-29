@@ -1,0 +1,173 @@
+{
+  "status": "passed",
+  "actual_main_runs": 60,
+  "pilot_runs_separate": 2,
+  "main_run_counts": {
+    "aodv": 30,
+    "olsr": 30
+  },
+  "seeds": [
+    20261029,
+    20261030,
+    20261031,
+    20261032,
+    20261033,
+    20261034,
+    20261035,
+    20261036,
+    20261037,
+    20261038,
+    20261039,
+    20261040,
+    20261041,
+    20261042,
+    20261043,
+    20261044,
+    20261045,
+    20261046,
+    20261047,
+    20261048,
+    20261049,
+    20261050,
+    20261051,
+    20261052,
+    20261053,
+    20261054,
+    20261055,
+    20261056,
+    20261057,
+    20261058
+  ],
+  "events_per_run": 599,
+  "main_packet_rows_checked": 35940,
+  "primary_pdr_definition": "unique_delivered_application_packet_ids / application_generated_packets",
+  "source_sha256": "BDEDB8C09FDE29B9146C82E8B28512D6E995FD1DC495C7F9E4087B17145AA840",
+  "supplied_runner_sha256": "34389574CE70ECDEB55CEA14CD519B8DD1676389132E003095D7864D2896F1A4",
+  "preserved_historical_files": 152,
+  "application_mismatch_runs": 0,
+  "packet_mismatch_runs": 0,
+  "packet_delay_max_abs_difference_ms": 0.0,
+  "flowmonitor_tx_changed_runs": 0,
+  "flowmonitor_rx_changed_runs": 0,
+  "flowmonitor_lost_changed_runs": 0,
+  "flowmonitor_lost_is_not_tx_minus_rx_or_application_loss": true,
+  "flowmonitor_pending_timeout_definition": "lostPackets - sum(packetsDropped)",
+  "delay_comparison_absolute_tolerance_ms": 1e-06,
+  "pdr_comparison_absolute_tolerance": 1e-12,
+  "confidence_interval": {
+    "distribution": "Student-t",
+    "confidence": 0.95,
+    "df": 29,
+    "critical_value": 2.045229642132703,
+    "measure": "half width of per-run mean"
+  },
+  "sampling_scope": "30 simulator repeats per protocol conditional on one recorded AirSim flight",
+  "runner_summary_sha256": "86FF3183ADD0911470D2A25DF0CF142507A863C77CCBDFE7A589A31497063B2E",
+  "runner_runlog_sha256": "34CB87B4041CABCFFC66A7199E6C0D647BBF416C5CAA721B871264D553986AF1",
+  "statistics": [
+    {
+      "routing": "aodv",
+      "simulator_repeats": 30,
+      "independent_recorded_flights": 1,
+      "mean_pdr": 0.9956594323873,
+      "pdr_student_t95_half_width": 0.008877457545175223,
+      "mean_application_delay_ms": 0.5617959564052667,
+      "delay_student_t95_half_width_ms": 0.004211714813198087,
+      "old_flowmonitor_lost_total": 78,
+      "corrected_flowmonitor_lost_total": 78,
+      "flowmonitor_lost_changed_runs": 0,
+      "pdr_changed_seeds": 0,
+      "delay_changed_seeds": 0,
+      "delivery_changed_seeds": 0,
+      "packet_delivery_mismatches": 0,
+      "packet_delay_mismatches": 0,
+      "generated_total": 17970,
+      "unique_delivered_total": 17892,
+      "socket_accepted_total": 17970,
+      "socket_rejected_total": 0,
+      "flowmonitor_tx_total": 17970,
+      "flowmonitor_rx_total": 17892,
+      "undelivered_after_drain_total": 78
+    },
+    {
+      "routing": "olsr",
+      "simulator_repeats": 30,
+      "independent_recorded_flights": 1,
+      "mean_pdr": 1.0,
+      "pdr_student_t95_half_width": 0.0,
+      "mean_application_delay_ms": 0.5627742048977666,
+      "delay_student_t95_half_width_ms": 0.004265241633354447,
+      "old_flowmonitor_lost_total": 0,
+      "corrected_flowmonitor_lost_total": 0,
+      "flowmonitor_lost_changed_runs": 0,
+      "pdr_changed_seeds": 0,
+      "delay_changed_seeds": 0,
+      "delivery_changed_seeds": 0,
+      "packet_delivery_mismatches": 0,
+      "packet_delay_mismatches": 0,
+      "generated_total": 17970,
+      "unique_delivered_total": 17970,
+      "socket_accepted_total": 17970,
+      "socket_rejected_total": 0,
+      "flowmonitor_tx_total": 17970,
+      "flowmonitor_rx_total": 17970,
+      "undelivered_after_drain_total": 0
+    }
+  ],
+  "execution": {
+    "status": "passed",
+    "runs": 60,
+    "started_utc": "2026-10-29T19:41:06.148470+00:00",
+    "finished_utc": "2026-10-29T19:42:12.328406+00:00",
+    "source_sha256": "BDEDB8C09FDE29B9146C82E8B28512D6E995FD1DC495C7F9E4087B17145AA840",
+    "historical_files_unchanged": 152
+  },
+  "existing_tests": [
+    {
+      "group": "R1_metrics_and_real_AirSim",
+      "exit": 0,
+      "tests": 21
+    },
+    {
+      "group": "ns3_input_validation",
+      "exit": 0,
+      "tests": 6
+    },
+    {
+      "group": "PROMPT06_diagnostics",
+      "exit": 0,
+      "tests": 4
+    }
+  ],
+  "final_tests": [
+    {
+      "group": "R1_metrics_and_real_AirSim",
+      "exit": 0,
+      "tests": 21
+    },
+    {
+      "group": "ns3_input_validation",
+      "exit": 0,
+      "tests": 6
+    },
+    {
+      "group": "PROMPT06_diagnostics",
+      "exit": 0,
+      "tests": 4
+    },
+    {
+      "group": "C_flowmonitor_final",
+      "exit": 0,
+      "tests": 18
+    }
+  ],
+  "final_test_count": 49,
+  "original_workspace_preservation": {
+    "status": "passed",
+    "files_checked": 266,
+    "mismatches": [],
+    "original_git_status_unchanged": true,
+    "original_HEAD": "b1e7a40289012b4f18ba7341092622e91ccfdd08",
+    "original_branch": "revision/simpat-2026-validation"
+  }
+}

@@ -1,0 +1,3 @@
+routing,simulator_repeats,independent_recorded_flights,mean_pdr,pdr_student_t95_half_width,mean_application_delay_ms,delay_student_t95_half_width_ms,old_flowmonitor_lost_total,corrected_flowmonitor_lost_total,flowmonitor_lost_changed_runs,pdr_changed_seeds,delay_changed_seeds,delivery_changed_seeds,packet_delivery_mismatches,packet_delay_mismatches,generated_total,unique_delivered_total,socket_accepted_total,socket_rejected_total,flowmonitor_tx_total,flowmonitor_rx_total,undelivered_after_drain_total
+aodv,30,1,0.9956594323873,0.008877457545175223,0.5617959564052667,0.004211714813198087,78,78,0,0,0,0,0,0,17970,17892,17970,0,17970,17892,78
+olsr,30,1,1.0,0.0,0.5627742048977666,0.004265241633354447,0,0,0,0,0,0,0,0,17970,17970,17970,0,17970,17970,0

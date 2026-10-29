@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "scenario": "C",
+  "input": "one recorded AirSim flight",
+  "ns3_version": "3.49",
+  "source_sha256": "BDEDB8C09FDE29B9146C82E8B28512D6E995FD1DC495C7F9E4087B17145AA840",
+  "n_runs": 60,
+  "application_mismatches": [],
+  "outcome": "FlowMonitor-lost diagnostic only; PDR from unique application deliveries"
+}

@@ -1,0 +1,7 @@
+# Preserve the supplied runner and SHA-256-audited evidence byte for byte.
+C_flowmonitor_final/** -text
+run_C_corrected_flowmonitor.py -text
+verify_C_flowmonitor.py -text
+analyze_C_flowmonitor.py -text
+test_C_flowmonitor_final.py -text
+C_flowmonitor_reproduce.md -text
