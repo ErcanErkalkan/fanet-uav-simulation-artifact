@@ -38,6 +38,8 @@ from fanet_wireless_channel_model import UAVNode, WirelessChannel, WirelessConfi
 class TraceFrame:
     time_s: float
     nodes: List[UAVNode]
+    sim_time_stamp_ns: Optional[int] = None
+    sequence: Optional[int] = None
 
 
 def distance(a: UAVNode, b: UAVNode) -> float:
@@ -56,47 +58,134 @@ def numeric_pstdev(values: Sequence[float]) -> float:
     return pstdev(values) if len(values) > 1 else 0.0
 
 
-def load_trace_frames(path: Path) -> Tuple[List[TraceFrame], Dict[str, int], str]:
+def load_trace_frames(
+    path: Path, time_column: str = "time_s"
+) -> Tuple[List[TraceFrame], Dict[str, int], str]:
     by_sequence: Dict[int, List[Dict[str, str]]] = defaultdict(list)
     with path.open("r", newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
-        required = {"time_s", "sequence", "node_id", "x_m", "y_m", "z_m"}
+        required = {
+            time_column,
+            "sequence",
+            "node_id",
+            "x_m",
+            "y_m",
+            "z_m",
+            "source",
+        }
         missing = required.difference(reader.fieldnames or [])
         if missing:
             raise ValueError(f"Trace file is missing required columns: {sorted(missing)}")
         for row in reader:
-            by_sequence[int(row["sequence"])].append(row)
+            try:
+                sequence = int(row["sequence"])
+            except (TypeError, ValueError) as exc:
+                raise ValueError(f"Invalid trace sequence {row.get('sequence')!r}") from exc
+            if sequence < 0:
+                raise ValueError(f"Trace sequence must be nonnegative: {sequence}")
+            by_sequence[sequence].append(row)
 
     if not by_sequence:
         raise ValueError("Trace file contains no trajectory samples.")
 
-    node_names = sorted({row["node_id"] for rows in by_sequence.values() for row in rows})
+    node_names = sorted(
+        {row["node_id"] for rows in by_sequence.values() for row in rows}
+    )
+    if any(not name for name in node_names):
+        raise ValueError("Trace contains an empty node_id")
     node_map = {name: idx for idx, name in enumerate(node_names)}
     frames: List[TraceFrame] = []
-    previous_positions: Dict[str, Tuple[float, float, float, float]] = {}
+    previous_vehicle_times: Dict[str, float] = {}
+    previous_sim_timestamps: Dict[str, int] = {}
     source_values = set()
+    expected_nodes = set(node_names)
+    previous_frame_time: Optional[float] = None
 
     for sequence in sorted(by_sequence):
         rows = sorted(by_sequence[sequence], key=lambda row: node_map[row["node_id"]])
-        time_s = mean(float(row["time_s"]) for row in rows)
+        names = [row["node_id"] for row in rows]
+        if len(names) != len(set(names)) or set(names) != expected_nodes:
+            raise ValueError(
+                f"Trace frame {sequence} does not contain exactly one row per node"
+            )
+        try:
+            row_times = [float(row[time_column]) for row in rows]
+            if not all(math.isfinite(value) for value in row_times):
+                raise ValueError("non-finite time")
+            time_s = mean(row_times)
+            if max(row_times) - min(row_times) > 1e-6:
+                raise ValueError(f"nodes have inconsistent {time_column} values")
+        except (TypeError, ValueError, KeyError) as exc:
+            raise ValueError(
+                f"Trace frame {sequence} has invalid {time_column}: {exc}"
+            ) from exc
+        if previous_frame_time is not None and time_s <= previous_frame_time:
+            raise ValueError(
+                f"Trace frame {sequence} has non-increasing {time_column}"
+            )
         nodes: List[UAVNode] = []
-        for row in rows:
+        sim_timestamps = []
+        for row, row_time in zip(rows, row_times):
             name = row["node_id"]
+            if row.get("vehicle_name") and row["vehicle_name"] != name:
+                raise ValueError(
+                    f"Trace frame {sequence} node_id and vehicle_name differ"
+                )
             idx = node_map[name]
-            x, y, z = float(row["x_m"]), float(row["y_m"]), float(row["z_m"])
-            vx = float(row.get("vx_mps") or 0.0)
-            vy = float(row.get("vy_mps") or 0.0)
-            vz = float(row.get("vz_mps") or 0.0)
-            if vx == 0.0 and vy == 0.0 and name in previous_positions:
-                prev_t, prev_x, prev_y, prev_z = previous_positions[name]
-                dt = max(1e-9, time_s - prev_t)
-                vx, vy, vz = (x - prev_x) / dt, (y - prev_y) / dt, (z - prev_z) / dt
+            try:
+                x, y, z = (float(row[axis]) for axis in ("x_m", "y_m", "z_m"))
+                velocity_values = [
+                    float(row.get(axis) or 0.0)
+                    for axis in ("vx_mps", "vy_mps", "vz_mps")
+                ]
+            except (TypeError, ValueError, KeyError) as exc:
+                raise ValueError(
+                    f"Trace frame {sequence} {name} has invalid position/velocity"
+                ) from exc
+            if not all(math.isfinite(value) for value in (x, y, z, *velocity_values)):
+                raise ValueError(
+                    f"Trace frame {sequence} {name} has non-finite position/velocity"
+                )
+            vx, vy, vz = velocity_values
             heading = math.atan2(vy, vx) if vx != 0.0 or vy != 0.0 else 0.0
             nodes.append(UAVNode(idx, [x, y, z], [vx, vy, vz], heading))
-            previous_positions[name] = (time_s, x, y, z)
-            if row.get("source"):
-                source_values.add(str(row["source"]))
-        frames.append(TraceFrame(time_s=time_s, nodes=nodes))
+            if name in previous_vehicle_times and row_time <= previous_vehicle_times[name]:
+                raise ValueError(
+                    f"{name} has non-increasing {time_column} at frame {sequence}"
+                )
+            previous_vehicle_times[name] = row_time
+            if "sim_time_stamp_ns" in row:
+                try:
+                    sim_timestamp = int(row["sim_time_stamp_ns"])
+                except (TypeError, ValueError) as exc:
+                    raise ValueError(
+                        f"Invalid simulation timestamp for {name} at frame {sequence}"
+                    ) from exc
+                if sim_timestamp <= previous_sim_timestamps.get(name, 0):
+                    raise ValueError(
+                        f"{name} has non-increasing simulation timestamp "
+                        f"at frame {sequence}"
+                    )
+                previous_sim_timestamps[name] = sim_timestamp
+                sim_timestamps.append(sim_timestamp)
+            source = str(row.get("source", "")).strip()
+            if not source:
+                raise ValueError(f"Trace frame {sequence} {name} has no source label")
+            source_values.add(source)
+        frames.append(
+            TraceFrame(
+                time_s=time_s,
+                nodes=nodes,
+                sim_time_stamp_ns=(
+                    round(mean(sim_timestamps)) if sim_timestamps else None
+                ),
+                sequence=sequence,
+            )
+        )
+        previous_frame_time = time_s
+
+    if len(source_values) != 1:
+        raise ValueError(f"Trace source labels are inconsistent: {sorted(source_values)}")
 
     source_label = sorted(source_values)[0] if source_values else "trace"
     return frames, node_map, source_label
@@ -158,6 +247,10 @@ class UnifiedFANETPipeline:
         self.args = args
         self.seed = seed
         self.rng = random.Random(seed)
+        traffic_seed = getattr(args, "traffic_seed", None)
+        self.traffic_seed = seed if traffic_seed is None else int(traffic_seed)
+        self.traffic_rng = random.Random(self.traffic_seed)
+        self.packet_events: List[Dict[str, object]] = []
         self.protocol = make_protocol(args.routing)
         self.channel = WirelessChannel(WirelessConfig(), self.rng)
         self.trace_node_map: Dict[str, int] = {}
@@ -167,7 +260,9 @@ class UnifiedFANETPipeline:
         if args.source == "trace":
             if args.trace is None:
                 raise ValueError("--trace is required when --source trace is selected.")
-            self.trace_frames, self.trace_node_map, self.trace_source = load_trace_frames(args.trace)
+            self.trace_frames, self.trace_node_map, self.trace_source = load_trace_frames(
+                args.trace, getattr(args, "trace_time_column", "time_s")
+            )
             self.num_uavs = len(self.trace_node_map)
             self.duration_s = max(self.trace_frames[-1].time_s - self.trace_frames[0].time_s, 1e-9)
             self.sample_count = len(self.trace_frames)
@@ -212,7 +307,14 @@ class UnifiedFANETPipeline:
             q_ab = self.channel.hop_quality(a, b, list(nodes))
             q_ba = self.channel.hop_quality(b, a, list(nodes))
             reliability = min(q_ab["reliability"], q_ba["reliability"])
-            if reliability >= self.channel.cfg.reliability_threshold:
+            in_range = distance(a, b) <= self.args.communication_range
+            if (
+                reliability >= self.channel.cfg.reliability_threshold
+                and (
+                    self.args.link_model != "wireless_35m_cap"
+                    or in_range
+                )
+            ):
                 qualities[key] = {
                     "reliability": reliability,
                     "sinr_db": min(q_ab["sinr_db"], q_ba["sinr_db"]),
@@ -273,8 +375,16 @@ class UnifiedFANETPipeline:
         link_episodes = LinkEpisodeTracker()
         energy_all_attempts_j = 0.0
         missing_route_edges = 0
+        traffic_rate = getattr(self.args, "traffic_rate_pps", None)
+        next_packet_time: Optional[float] = None
+        packet_index = 0
+        node_names = {
+            node_id: name for name, node_id in self.trace_node_map.items()
+        }
 
         for frame in self.frame_iter():
+            if traffic_rate is not None and traffic_rate <= 0:
+                raise ValueError("traffic_rate_pps must be positive")
             step_dt = (self.args.dt if self.args.source == "synthetic" else 0.0) if last_time is None else max(0.0, frame.time_s - last_time)
             qualities = self.edge_quality(frame.nodes)
             edges = set(qualities)
@@ -285,9 +395,48 @@ class UnifiedFANETPipeline:
             pos = self.positions(frame.nodes)
             self.protocol.on_topology_change(frame.time_s, edges, pos)
 
+            if traffic_rate is None:
+                packets_this_frame = [
+                    (None, *self.rng.sample(range(self.num_uavs), 2))
+                    for _ in range(self.args.packets_per_step)
+                ]
+            else:
+                if next_packet_time is None:
+                    next_packet_time = frame.time_s
+                packets_this_frame = []
+                tolerance = 1e-9
+                while next_packet_time <= frame.time_s + tolerance:
+                    packets_this_frame.append(
+                        (
+                            next_packet_time,
+                            *self.traffic_rng.sample(range(self.num_uavs), 2),
+                        )
+                    )
+                    next_packet_time += 1.0 / traffic_rate
+
             if self.num_uavs >= 2:
-                for _ in range(self.args.packets_per_step):
-                    src, dst = self.rng.sample(range(self.num_uavs), 2)
+                for generated_time, src, dst in packets_this_frame:
+                    self.packet_events.append(
+                        {
+                            "scenario": self.args.scenario_name,
+                            "repetition_seed": self.seed,
+                            "traffic_seed": self.traffic_seed,
+                            "traffic_rate_pps": traffic_rate or (
+                                self.args.packets_per_step / self.args.dt
+                                if self.args.source == "synthetic"
+                                else None
+                            ),
+                            "packet_index": packet_index,
+                            "generation_time_s": (
+                                generated_time if generated_time is not None else frame.time_s
+                            ),
+                            "evaluated_at_trace_time_s": frame.time_s,
+                            "trace_sequence": frame.sequence if self.trace_frames is not None else "",
+                            "source_node_id": node_names.get(src, str(src)),
+                            "destination_node_id": node_names.get(dst, str(dst)),
+                        }
+                    )
+                    packet_index += 1
                     attempted += 1
                     decision = self.protocol.route(src, dst, edges, pos, frame.time_s)
                     control_packets += decision.control_packets
@@ -324,6 +473,25 @@ class UnifiedFANETPipeline:
             "trace_file": "" if self.args.trace is None else Path(self.args.trace).name,
             "link_model": self.args.link_model,
             "routing_protocol": self.args.routing,
+            "traffic_rate_pps": traffic_rate if traffic_rate is not None else (
+                self.args.packets_per_step / self.args.dt
+                if self.args.source == "synthetic"
+                else float("nan")
+            ),
+            "traffic_seed": self.traffic_seed,
+            "traffic_generation_mode": (
+                "time_based_deterministic"
+                if traffic_rate is not None
+                else "packets_per_step"
+            ),
+            "replay_time_axis": getattr(self.args, "trace_time_column", "time_s"),
+            "trace_sim_duration_s": (
+                (self.trace_frames[-1].sim_time_stamp_ns - self.trace_frames[0].sim_time_stamp_ns) / 1e9
+                if self.trace_frames
+                and self.trace_frames[0].sim_time_stamp_ns is not None
+                and self.trace_frames[-1].sim_time_stamp_ns is not None
+                else float("nan")
+            ),
             "num_uavs": self.num_uavs,
             "seed": self.seed,
             "samples": self.sample_count,
@@ -479,7 +647,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--speed-max", type=float, default=6.0)
     parser.add_argument("--communication-range", type=float, default=35.0)
     parser.add_argument("--packets-per-step", type=int, default=5)
-    parser.add_argument("--link-model", choices=["binary", "wireless"], default="binary")
+    parser.add_argument(
+        "--link-model",
+        choices=["binary", "wireless", "wireless_35m_cap"],
+        default="binary",
+    )
     parser.add_argument(
         "--routing",
         choices=["shortest_path_oracle", "aodv_like_reactive", "olsr_like_proactive", "greedy_geographic"],
@@ -487,6 +659,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--repetitions", type=int, default=1)
     parser.add_argument("--seed", type=int, default=2026)
+    parser.add_argument("--traffic-seed", type=int, default=None)
+    parser.add_argument("--traffic-rate-pps", type=float, default=None)
+    parser.add_argument("--trace-time-column", default="time_s")
     parser.add_argument("--raw-out", type=Path, default=Path("fanet_unified_raw.csv"))
     parser.add_argument("--summary-out", type=Path, default=Path("fanet_unified_summary.csv"))
     return parser.parse_args()

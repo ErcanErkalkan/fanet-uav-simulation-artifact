@@ -29,7 +29,9 @@ Run from repo root. `extra/*.csv` contains both per-seed data and summaries. All
 ## Scientific limits
 
 - This is NOT a complete IEEE 802.11/PHY/MAC or ns-3/OMNeT++ simulation.
-- No real AirSim run was collected; the supplied CSV contains `source=airsim-compatible-sample`.
+- The frozen R1 bundle's supplied trajectory remains `source=airsim-compatible-sample`.
+  A separate, live 120-second AirSim Blocks three-UAV run is now recorded under
+  `local_validation/2026-10-29/airsim/`; it does not change the frozen R1 bundle.
 - `routing_timestep_sensitivity.py` changes topology-update resolution, not real millisecond event scheduling.
 - Some new comparisons are *calibration sensitivity* tests, not independent physical calibration.
 - Reviewer-color classes are in `EXPERIMENT_STATUS.csv` and described in `EXPERIMENT_REPORT_TR.md`.

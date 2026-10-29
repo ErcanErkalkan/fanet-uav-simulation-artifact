@@ -1,0 +1,19 @@
+Started UTC: 2026-10-29T11:41:24.295951+00:00
+Input: airsim_real_3uav_120s.csv
+Replay time axis: monotonic_time_s
+Input validation passed: sha256=9C09B80E19CC6321BA61899565D34CA96EA4D0C02C3B0E0E4F969DD7F93115E3; frames=600; rows=1800
+Binary topology: 600/600 frames fully connected; no multi-hop claim.
+Completed 5hz_original repetition 5/30 at 2026-10-29T11:41:35.332477+00:00
+Completed 5hz_original repetition 10/30 at 2026-10-29T11:41:45.947753+00:00
+Completed 5hz_original repetition 15/30 at 2026-10-29T11:41:56.126960+00:00
+Completed 5hz_original repetition 20/30 at 2026-10-29T11:42:06.910674+00:00
+Completed 5hz_original repetition 25/30 at 2026-10-29T11:42:17.829942+00:00
+Completed 5hz_original repetition 30/30 at 2026-10-29T11:42:29.634996+00:00
+Completed 1hz_derived repetition 5/30 at 2026-10-29T11:42:33.354349+00:00
+Completed 1hz_derived repetition 10/30 at 2026-10-29T11:42:37.072975+00:00
+Completed 1hz_derived repetition 15/30 at 2026-10-29T11:42:40.615224+00:00
+Completed 1hz_derived repetition 20/30 at 2026-10-29T11:42:44.086211+00:00
+Completed 1hz_derived repetition 25/30 at 2026-10-29T11:42:47.613368+00:00
+Completed 1hz_derived repetition 30/30 at 2026-10-29T11:42:51.153636+00:00
+PASS: 360 runs; 12 conditions; 35820 traffic events; source sha256 unchanged.
+Finished UTC: 2026-10-29T11:42:56.073265+00:00
