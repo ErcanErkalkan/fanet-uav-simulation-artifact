@@ -1,0 +1,29 @@
+PROMPT 04 ns-3 setup log (sanitized; no host-specific paths)
+
+Official current stable release verified: ns-3.49, released 2026-10-07.
+Official archive: https://www.nsnam.org/releases/ns-3.49.tar.bz2
+Archive size from HTTP metadata: 47,274,211 bytes.
+Local archive SHA-256: 81c9eb0839d2b527e9cc01db7eb0a521d8fc6a520ebb23d17f3a5c96e47b4d68.
+Official ns-3.49 peeled Git tag commit: 418210e8914e9f6bcb5cddbcc94a2cecb7853b68.
+
+Pre-install tool versions: g++ 13.3.0; Python 3.12.3; Git 2.43.0; CMake/Ninja absent.
+User approved package installation and source download.
+
+First apt install attempt failed because the cached Ubuntu libarchive package URL returned HTTP 404. No package was installed by that failed attempt. `apt-get update` refreshed package metadata; a second install succeeded:
+- cmake 3.28.3
+- ninja-build 1.11.1
+- libarchive13t64, libjsoncpp25, librhash0, libuv1t64 and cmake-data
+The install added 50.7 MB; it did not upgrade packages or change Python/g++.
+
+The archive downloaded successfully and its SHA-256 was recorded above. It was extracted under the WSL Linux home directory, not into the Git repository.
+
+The initial broad examples/tests build graph contained 1,432 actions. It was stopped without deleting source or successful objects. The configuration was narrowed to core/Wi-Fi examples and test suites; the active build uses 8 jobs with RAM checks.
+
+Build and validation outcome:
+- ns-3.49 CMake/Ninja build completed successfully: 750/750 actions, 8 jobs.
+- Official tutorial `./ns3 run first` passed; a 1024-byte UDP exchange was observed.
+- Focused QUICK tests passed: `simulator` (1/1) and `wifi-channel-settings` (1/1).
+- The four custom smoke cases all passed. Results are in `ns3_smoke_test_results.csv`; the detailed captured command output is in `ns3_smoke_test.log`.
+- Final smoke metrics: single-hop 5/5, PDR 1.0, 1.000 ms; out-of-range 0/5, PDR 0, 5 undelivered at end; AODV line 5/5, PDR 1.0, 3.000 ms, estimated 2.2 hops; OLSR line 5/5, PDR 1.0, 2.000 ms, estimated 2.0 hops. Control overhead was not measured (`NA`).
+- For end-of-run accounting, the smoke driver calls `CheckForLostPackets(Seconds(0))`; the default timeout had reported only packets older than its 10-second threshold as lost at the 20-second stop, despite zero reception in the out-of-range case. With the explicit end-of-run threshold, all five undelivered packets are counted. PDR remains based on received/transmitted application-flow packets.
+- Direct invocation of the PowerShell wrapper on the Google Drive volume was blocked by the local PowerShell AuthorizationManager (`AuthorizationManager check failed`). No execution policy was changed. The same file-staging, WSL runner, and result-copy steps were executed directly; all four shell-runner cases passed.
