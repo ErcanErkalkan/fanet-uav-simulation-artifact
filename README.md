@@ -1,5 +1,12 @@
 # FANET UAV Simulation Artifact
 
+## Current review-stage experiment snapshot (2026-10-29)
+
+The latest reproducibility and reviewer-oriented experimental evidence for manuscript **SIMPAT-D-26-1023** is kept as a **versioned additive snapshot** at [`revisions/2026-10-29/`](revisions/2026-10-29/).
+
+The snapshot includes executable simulation and validation scripts, summary CSV data, vector charts, and a frozen ZIP package with **all raw experimental outputs, logs and manifests**. See [revision status](revisions/2026-10-29/REVISION_STATUS.md) for completed work and remaining limitations. This is **not** the final journal revision; the original published artifact and Zenodo DOI have not been overwritten. Original manuscript, reviewer response files and working LaTeX are retained in the private project Drive.
+
+
 This repository contains the executable code and reproducible data artifact for a Python-based FANET UAV simulation framework. It excludes manuscript source files, review notes, and writing-only material.
 
 Persistent archive: https://doi.org/10.5281/zenodo.20369732
