@@ -1,0 +1,23 @@
+﻿Metric,Unit,Definition,Applicable script,Limitation
+pdr,0..1,Delivered packet attempts / attempted packet attempts,All models,Unchanged denominator
+avg_latency_ms,ms,Mean model-derived latency among DELIVERED packets,All models,Undefined if none delivered; not an actual ms event timeline
+avg_hops,hops,Mean hop count among delivered packets,All models,Undefined if none delivered
+route_failures,events per run,Legacy protocol-specific route-event flag count,Routing/statistical/unified,NOT comparable as packet drops across protocols
+packets_without_routing_path,packets per run,Packets whose routing decision lacks a valid path,Routing/statistical/unified/wireless,Excludes subsequent hop failures
+failed_wireless_packets_after_routing,packets per run,Packets whose chosen path exists but stochastic hop transmission fails,Wireless/unified,No explicit collision scheduling
+route_discovery_attempts,events per run,AODV-like discovery invocations,Routing/statistical/unified,Model control-message abstraction
+route_discovery_failures,events per run,Discovery attempts ending with no usable path,Routing/statistical/unified,Not all legacy failure flags
+route_recovery_after_flag,events per run,Legacy route flag followed by valid route,Routing/statistical/unified,"May represent expiry or invalidation, not necessarily link break"
+stale_route_packets,packets per run,Packet with route decision using stale route flag,Routing/statistical/unified,OLSR-like specific
+control_packets_per_s,abstract control messages/s,Total abstract control messages / simulation duration,Routing/statistical/unified,NOT RFC-level control-plane packet count
+topology_changes_excluding_initial_per_s,edge transitions/s,Graph-edge symmetric-difference transitions after initial snapshot / T,All models,Channel-stochastic graph fluctuation also counted
+initial_active_links,edges,Number of active graph edges at first observation,All models,Not a topology transition
+mean_completed_link_episode_s,s,Mean length of sampled active-edge episodes that ended during observation,All models,"Right-censored episodes excluded, biased as duration estimator"
+right_censored_link_episode_count,episodes,Active link episodes at simulation endpoint,All models,Not proven complete lifetimes
+mean_observed_link_episode_s_including_censored,s,Mean observed episode lengths including endpoint-truncated active episodes,All models,"Observed intervals, not unbiased lifetime"
+avg_link_lifetime_s,s,Legacy cumulative active time per unordered edge,Routing/statistical/unified,NOT uninterrupted link lifetime; old tables still use this
+mean_sinr_db,dB,Mean model-derived SINR for delivered packet hops,Wireless/unified,Binary baseline N/A; selection bias for success-only samples
+energy_mj_per_packet,mJ/delivered packet,Mean modeled communication energy associated with delivered packets,Wireless/unified,Binary baseline N/A; excludes failed attempted energy
+energy_mj_per_delivered_packet_including_failed_attempts,mJ/delivered packet,All modeled attempted-hop communication energy / delivered packets,Wireless/unified,"Excludes energy spent when no route, not physical flight energy"
+*_ci95,metric units,Approx normal 95% confidence INTERVAL HALF-WIDTH (1.96 sample SD/sqrt(n)),Summary outputs,When n_valid<2 use N/A; Student-t not used
+*_n_valid,independent run values,Finite per-run measurements entering the statistic,Summary outputs,Different metrics can have different valid sample sizes
