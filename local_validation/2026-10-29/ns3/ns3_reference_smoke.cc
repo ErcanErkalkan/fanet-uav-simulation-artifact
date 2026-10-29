@@ -17,15 +17,35 @@
 
 using namespace ns3;
 
+namespace
+{
+uint32_t g_applicationTxPackets = 0;
+uint32_t g_applicationRxPackets = 0;
+
+void
+CountApplicationTx(Ptr<const Packet>)
+{
+    ++g_applicationTxPackets;
+}
+
+void
+CountApplicationRx(Ptr<const Packet>, const Address&)
+{
+    ++g_applicationRxPackets;
+}
+} // namespace
+
 int
 main(int argc, char* argv[])
 {
     std::string scenario = "single-hop";
     std::string routing = "global";
+    std::string profile = "range_limited_wifi";
     uint32_t seed = 20261029;
     CommandLine command(__FILE__);
     command.AddValue("scenario", "single-hop, out-of-range, or linear-chain", scenario);
     command.AddValue("routing", "global, aodv, or olsr", routing);
+    command.AddValue("profile", "range_limited_wifi or log_distance_wifi", profile);
     command.AddValue("seed", "ns-3 RNG seed", seed);
     command.Parse(argc, argv);
 
@@ -53,7 +73,8 @@ main(int argc, char* argv[])
         return 2;
     }
 
-    if ((routing != "global" && routing != "aodv" && routing != "olsr") ||
+    if ((profile != "range_limited_wifi" && profile != "log_distance_wifi") ||
+        (routing != "global" && routing != "aodv" && routing != "olsr") ||
         (scenario == "linear-chain" && routing == "global") ||
         (scenario != "linear-chain" && routing != "global"))
     {
@@ -83,12 +104,30 @@ main(int argc, char* argv[])
     mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
     mobility.Install(nodes);
 
-    YansWifiChannelHelper channel = YansWifiChannelHelper::Default();
-    channel.AddPropagationLoss("ns3::RangePropagationLossModel",
-                               "MaxRange",
-                               DoubleValue(rangeM));
+    YansWifiChannelHelper channel;
+    channel.SetPropagationDelay("ns3::ConstantSpeedPropagationDelayModel");
+    if (profile == "range_limited_wifi")
+    {
+        channel.AddPropagationLoss("ns3::RangePropagationLossModel",
+                                   "MaxRange",
+                                   DoubleValue(rangeM));
+    }
+    else
+    {
+        channel.AddPropagationLoss("ns3::LogDistancePropagationLossModel",
+                                   "Exponent",
+                                   DoubleValue(3.0),
+                                   "ReferenceDistance",
+                                   DoubleValue(1.0),
+                                   "ReferenceLoss",
+                                   DoubleValue(40.05));
+    }
     YansWifiPhyHelper phy;
     phy.SetChannel(channel.Create());
+    phy.Set("ChannelSettings", StringValue("{1, 20, BAND_2_4GHZ, 0}"));
+    phy.Set("TxPowerStart", DoubleValue(16.0));
+    phy.Set("TxPowerEnd", DoubleValue(16.0));
+    phy.Set("RxSensitivity", DoubleValue(-101.0));
 
     WifiHelper wifi;
     wifi.SetStandard(WIFI_STANDARD_80211g);
@@ -98,7 +137,7 @@ main(int argc, char* argv[])
                                  "ControlMode",
                                  StringValue("ErpOfdmRate6Mbps"));
     WifiMacHelper mac;
-    mac.SetType("ns3::AdhocWifiMac");
+    mac.SetType("ns3::AdhocWifiMac", "FrameRetryLimit", UintegerValue(7));
     NetDeviceContainer devices = wifi.Install(phy, mac, nodes);
 
     InternetStackHelper internet;
@@ -142,6 +181,15 @@ main(int argc, char* argv[])
     source.Start(Seconds(trafficStartSeconds));
     source.Stop(Seconds(simulationDurationSeconds - 0.1));
 
+    g_applicationTxPackets = 0;
+    g_applicationRxPackets = 0;
+    Config::ConnectWithoutContext(
+        "/NodeList/*/ApplicationList/*/$ns3::UdpClient/Tx",
+        MakeCallback(&CountApplicationTx));
+    Config::ConnectWithoutContext(
+        "/NodeList/*/ApplicationList/*/$ns3::PacketSink/Rx",
+        MakeCallback(&CountApplicationRx));
+
     FlowMonitorHelper flowHelper;
     Ptr<FlowMonitor> monitor = flowHelper.InstallAll();
     Simulator::Stop(Seconds(simulationDurationSeconds));
@@ -153,7 +201,10 @@ main(int argc, char* argv[])
     uint32_t rxPackets = 0;
     uint32_t lostPackets = 0;
     uint32_t timesForwarded = 0;
+    uint32_t flowTxPackets = 0;
+    uint32_t flowRxPackets = 0;
     double meanDelayMs = std::nan("");
+    double legacyIntegerMeanDelayMs = std::nan("");
     bool flowFound = false;
     for (const auto& entry : monitor->GetFlowStats())
     {
@@ -163,19 +214,24 @@ main(int argc, char* argv[])
             tuple.destinationPort == port)
         {
             const auto& stats = entry.second;
-            txPackets += stats.txPackets;
-            rxPackets += stats.rxPackets;
+            flowTxPackets += stats.txPackets;
+            flowRxPackets += stats.rxPackets;
             lostPackets += stats.lostPackets;
             timesForwarded += stats.timesForwarded;
             if (stats.rxPackets > 0)
             {
-                meanDelayMs = stats.delaySum.GetMilliSeconds() / stats.rxPackets;
+                meanDelayMs =
+                    1000.0 * stats.delaySum.GetSeconds() / static_cast<double>(stats.rxPackets);
+                legacyIntegerMeanDelayMs = static_cast<double>(
+                    stats.delaySum.GetMilliSeconds() / stats.rxPackets);
             }
             flowFound = true;
         }
     }
     Simulator::Destroy();
 
+    txPackets = g_applicationTxPackets;
+    rxPackets = g_applicationRxPackets;
     const double pdr = txPackets > 0 ? static_cast<double>(rxPackets) / txPackets : 0.0;
     const double hopEstimate =
         rxPackets > 0 ? 1.0 + static_cast<double>(timesForwarded) / rxPackets : std::nan("");
@@ -195,13 +251,23 @@ main(int argc, char* argv[])
     }
 
     std::cout << std::fixed << std::setprecision(6)
-              << "RESULT," << scenario << ',' << routing << ',' << nodeCount << ','
+              << "RESULT," << profile << ',' << scenario << ',' << routing << ',' << nodeCount << ','
               << sourceDestinationDistanceM << ',' << rangeM << ','
               << simulationDurationSeconds << ',' << packetSizeBytes << ','
-              << offeredPackets << ',' << txPackets << ',' << rxPackets << ',' << pdr << ',';
+              << offeredPackets << ',' << txPackets << ',' << flowTxPackets << ','
+              << flowRxPackets << ',' << rxPackets << ',' << pdr << ',';
     if (std::isfinite(meanDelayMs))
     {
         std::cout << meanDelayMs;
+    }
+    else
+    {
+        std::cout << "NA";
+    }
+    std::cout << ',';
+    if (std::isfinite(legacyIntegerMeanDelayMs))
+    {
+        std::cout << legacyIntegerMeanDelayMs;
     }
     else
     {

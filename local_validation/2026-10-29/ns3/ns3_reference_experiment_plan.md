@@ -25,14 +25,14 @@ The real three-UAV AirSim trace is fully connected under a 35 m binary cutoff in
 ## C. AirSim three-UAV mobility trace
 
 - Ingest the unchanged 19-column real AirSim CSV, 600 frames, three UAVs, `source=airsim`; validate sequence, finite coordinates, and monotonic times before replay.
-- Use `monotonic_time_s` as the ns-3 replay clock, relative to its first sample; schedule WaypointMobilityModel updates from the measured common coordinates. Convert NED down-positive z to Cartesian up-positive z by sign inversion; horizontal axes may be retained because the selected isotropic model depends on Euclidean distance.
+- Use `monotonic_time_s` as the replay clock, relative to its first sample. The ns-3 driver applies each exact `evaluated_at_time_s` coordinate snapshot to `ConstantPositionMobilityModel` when a packet is generated; it does not interpolate between frames. Convert common NED down-positive z to ns-3 Cartesian up-positive z by sign inversion; this preserves Euclidean distances.
 - Run ns-3 AODV and OLSR independently over identical mobility and application schedules. Start with an equal total 5 packet/s schedule; record each source/destination pair and packet timestamp.
 - Under 35 m binary range, all pairs are in range in the source trace. Do not claim multi-hop performance from this case. Wireless PHY parameters remain uncalibrated unless separate AirSim radio measurements are provided.
 
 ## D. Twenty-UAV synthetic configuration
 
-- Match the R1 baseline values: 20 UAVs, 35 m abstract range, medium speed profile, random-waypoint family, 30 s duration, 1 s R1 observation interval, and 5 packets per interval (5 packets/s total).
-- R1 synthetic area default is 120 m × 120 m × 50 m. The inspected R1 implementation samples target positions within the area, samples a 3D target-speed magnitude of 1.0–2.4 m/s, advances/clips positions at 1 s updates, and picks a new target within 2 m. ns-3 `RandomWaypointMobilityModel` is not identical to this update/speed/boundary process; use an explicit imported R1 trace or a custom ns-3 mobility model before claiming movement equivalence.
+- Match the R1 baseline values: 20 UAVs, 35 m binary cutoff, 30 s duration, 1 s observation interval, and 5 packets/s total. The actual R1 `SyntheticMobility` implementation initializes a heading and velocity for each UAV and advances it with boundary reflection; it is not RandomWaypoint mobility.
+- Generate one R1 mobility CSV per repetition seed and import those exact coordinates into ns-3. R1 synthetic bounds are 120 m × 120 m horizontally and 5–50 m altitude; horizontal speed magnitude is sampled from 1.0–2.4 m/s and vertical velocity independently from -0.5–0.5 m/s. This uses the R1 trace as a shared coordinate input, but the ns-3 driver samples positions at packet evaluation times without interpolation.
 - Use a declared seed/run matrix and identical application generation schedules across routing implementations. Do not equate Python and ns-3 RNG streams.
 
 ## Execution order
@@ -40,7 +40,7 @@ The real three-UAV AirSim trace is fully connected under a 35 m binary cutoff in
 1. Build and verify the selected ns-3 modules and run short core/Wi-Fi test suites.
 2. From Windows PowerShell, run `.\run_ns3_smoke_tests.ps1`; it stages the C++ source into the WSL Linux scratch directory because the Google Drive volume is not mounted inside WSL.
 3. Validate the scenario driver against A/B smoke expectations before implementing trace ingestion.
-4. Implement C and D as separate experiment drivers, validating inputs and schedule equivalence before collecting results.
-5. Only after radio parameters and traffic are calibrated/matched should a cross-framework comparison be interpreted quantitatively.
+4. Run C and D through the shared paired driver after input, packet-identity, topology, and deterministic-seed checks pass.
+5. Treat reported Python latency as model-based and ns-3 latency as packet-level. Do not infer physical superiority until PHY/channel calibration and metric equivalence are established.
 
 No experiment C or D result is generated in this setup phase.

@@ -1,0 +1,17 @@
+experiment,comparison,metric,difference_definition,n_paired_repetitions,mean_difference,student_t_95_ci_half_width,degrees_of_freedom,t_critical
+C,ns3_minus_Python_R1_aodv,pdr,left minus right; paired by repetition_seed,30,-0.004340567612700001,0.008877457544599216,29,2.045229642
+C,ns3_minus_Python_R1_aodv,mean_latency_ms,left minus right; paired by repetition_seed,30,-14.335397916295776,0.016881867107719228,29,2.045229642
+C,ns3_minus_Python_R1_olsr,pdr,left minus right; paired by repetition_seed,30,0.0,0.0,29,2.045229642
+C,ns3_minus_Python_R1_olsr,mean_latency_ms,left minus right; paired by repetition_seed,30,-13.491264409038667,0.014785087758369638,29,2.045229642
+C,ns-3.49_aodv_minus_olsr,pdr,left minus right; paired by repetition_seed,30,-0.004340567612700001,0.008877457544599216,29,2.045229642
+C,ns-3.49_aodv_minus_olsr,mean_latency_ms,left minus right; paired by repetition_seed,30,-0.0009782484924999964,0.0007530645275137236,29,2.045229642
+C,Python_R1_abstraction_aodv_minus_olsr,pdr,left minus right; paired by repetition_seed,30,0.0,0.0,29,2.045229642
+C,Python_R1_abstraction_aodv_minus_olsr,mean_latency_ms,left minus right; paired by repetition_seed,30,0.8431552587646075,0.0065483923181883395,29,2.045229642
+D,ns3_minus_Python_R1_aodv,pdr,left minus right; paired by repetition_seed,30,-0.00022222222224443737,0.01873723782807328,29,2.045229642
+D,ns3_minus_Python_R1_aodv,mean_latency_ms,left minus right; paired by repetition_seed,30,736.1801113007389,112.81885607890605,29,2.045229642
+D,ns3_minus_Python_R1_olsr,pdr,left minus right; paired by repetition_seed,30,-0.25666666666665555,0.03663141757424733,29,2.045229642
+D,ns3_minus_Python_R1_olsr,mean_latency_ms,left minus right; paired by repetition_seed,30,-7.477301008601929,6.938476754225413,29,2.045229642
+D,ns-3.49_aodv_minus_olsr,pdr,left minus right; paired by repetition_seed,30,0.3039999999999667,0.03822907986376092,29,2.045229642
+D,ns-3.49_aodv_minus_olsr,mean_latency_ms,left minus right; paired by repetition_seed,30,755.6551966353144,114.52343243396963,29,2.045229642
+D,Python_R1_abstraction_aodv_minus_olsr,pdr,left minus right; paired by repetition_seed,30,0.047555555555555566,0.011050619993225182,29,2.045229642
+D,Python_R1_abstraction_aodv_minus_olsr,mean_latency_ms,left minus right; paired by repetition_seed,30,11.997784325973573,0.37403079170478654,29,2.045229642

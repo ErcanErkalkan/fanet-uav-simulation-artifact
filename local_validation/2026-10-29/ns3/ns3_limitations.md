@@ -1,13 +1,14 @@
-# ns-3 setup limitations
+# ns-3 reference comparison limitations
 
-- Only environment setup, source/API validation, and simple deterministic smoke cases are in scope. No scientific cross-framework comparison is claimed.
-- The official ns-3 AODV/OLSR implementations are not the Python R1 AODV-like/OLSR-like abstractions.
-- A `RangePropagationLossModel` cutoff is a deterministic topology fixture, not an RF propagation calibration. The current smoke Wi-Fi configuration is not calibrated to AirSim or a real radio.
-- The real three-UAV trace is completely connected at 35 m for all 600 frames; it does not exercise a changing multi-hop route.
-- The AirSim wall/monotonic trace duration is about 119.791 s while AirSim simulation time is about 118.284 s. Replay uses monotonic time and records the clock-domain difference.
-- Python packet events do not define serialized UDP packet size, MAC headers, PHY airtime, or retransmission behavior. A shared explicit traffic schedule is needed for quantitative matching.
-- FlowMonitor reports IP-level flow statistics, not PHY delivery, routing control overhead, or necessarily the exact hop metric used by Python.
-- Standard validation here is limited to the `simulator` and `wifi-channel-settings` QUICK test suites plus the four custom smoke cases; the full ns-3 test suite was not run.
-- Smoke delay and forwarding-derived hop estimates are specific to this fixed-rate, hard-range, 20 s test configuration. The AODV estimate (2.2) is not an exact per-packet route-length assertion.
-- CMake optional modules/features not required by the selected experiment modules (GSL, SQLite, LibXML2, Eigen, GTK/visualizer, Python bindings, and docs toolchain) remain disabled.
-- Experiment C (AirSim trace replay), experiment D (20-UAV synthetic scenario), multi-seed comparisons, and radio calibration are not performed by the initial smoke suite.
+- The reference implementation is packet-level ns-3.49 using its standard AODV and OLSR modules. The R1 Python protocols are AODV-like and OLSR-like abstractions, not implementations of the same protocols.
+- The 35 m `RangePropagationLossModel` is a deterministic hard topology cutoff. It is not a calibrated radio channel, a measured link budget, or a physical equivalence claim.
+- The AirSim replay uses the original monotonic clock as its time axis: 119.7909209 s versus 118.283523328 s on the AirSim simulation clock. The 1.507397572 s difference is retained; no rescaling is applied.
+- All 600 AirSim mobility frames are fully connected under the 35 m cutoff. C validates trace ingestion and direct-link delivery but is not a multi-hop routing stress case.
+- D imports the same R1 `SyntheticMobility` coordinate traces into both frameworks. The source generator uses heading/velocity motion with boundary reflection, not RandomWaypoint. Positions are sampled at packet-evaluation frames without interpolation.
+- ns-3 delay is packet-level application send-to-receive and FlowMonitor delay is an IP-layer measure. R1 latency is model-based (base/per-hop/routing penalties plus seeded jitter); these latency metrics are not physically equivalent.
+- Application packet-identity delivery is the PDR numerator. UDP socket rejections are separated from accepted packets and later non-deliveries, with rejection cause left unattributed unless separately instrumented.
+- FlowMonitor Tx/Rx/loss counts are retained independently from application packet-identity counts. The official ns-3.49 documentation defines `lostPackets` as packets assumed lost when not reported for 10 seconds; packets queued below IP at simulation end can be counted as lost and may still count toward received or dropped packets. In these results, FlowMonitor `lostPackets` exceeded `max(Tx - Rx, 0)` in all 30 D/AODV runs. Do not treat it as the complement of Rx or as application loss: application unique-delivery IDs define PDR and application packets undelivered after drain define non-delivery. See the [official FlowMonitor documentation](https://www.nsnam.org/docs/release/3.49/models/html/flow-monitor.html).
+- ns-3 routing control-message and byte overhead is `NA`; this driver does not instrument control traffic. Python route-event counters are specific to its abstract state machine.
+- The ns-3 forwarding-derived hop estimate is not an exact per-packet hop count. R1 route hop counts are model path lengths.
+- Thirty repetitions are paired mobility/traffic/RNG replays, not 30 independent AirSim flights. In C the AirSim trajectory itself remains one fixed recorded flight.
+- The selected 802.11g/PHY/MAC settings are fixed and documented, but no calibration against AirSim radio behavior was performed.
