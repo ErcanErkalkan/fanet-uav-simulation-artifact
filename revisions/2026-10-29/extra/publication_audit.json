@@ -1,0 +1,42 @@
+[
+  {
+    "experiment": "routing",
+    "raw_rows": 360,
+    "summary_rows": 12,
+    "original_rows": 12,
+    "pdr_matching_rows": 12,
+    "pdr_max_abs_error": 0.0,
+    "conservation_check": "passed",
+    "row_count_check": "passed"
+  },
+  {
+    "experiment": "statistical",
+    "raw_rows": 600,
+    "summary_rows": 20,
+    "original_rows": 20,
+    "pdr_matching_rows": 20,
+    "pdr_max_abs_error": 0.0,
+    "conservation_check": "passed",
+    "row_count_check": "passed"
+  },
+  {
+    "experiment": "wireless",
+    "raw_rows": 180,
+    "summary_rows": 6,
+    "original_rows": 6,
+    "pdr_matching_rows": 6,
+    "pdr_max_abs_error": 0.0,
+    "conservation_check": "passed",
+    "row_count_check": "passed"
+  },
+  {
+    "experiment": "unified",
+    "raw_rows": 120,
+    "summary_rows": 4,
+    "original_rows": 4,
+    "pdr_matching_rows": 4,
+    "pdr_max_abs_error": 0.0,
+    "conservation_check": "passed",
+    "row_count_check": "passed"
+  }
+]
