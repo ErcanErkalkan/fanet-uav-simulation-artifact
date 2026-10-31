@@ -32,5 +32,5 @@
       "resource_type": "software"
     }
   ],
-  "notes": "Planned next archived release. Software MIT; independently licensed data CC BY 4.0 under DATA_LICENSE. Historical Zenodo v1.0.0 is a different, baseline snapshot. Editorial materials are excluded."
+  "notes": "Version 1.1.0 is published at https://doi.org/10.5281/zenodo.23830334 (2026-10-31). Historical v1.0.0 remains a baseline at https://doi.org/10.5281/zenodo.20369732. Code license MIT; distributed data license CC BY 4.0 per DATA_LICENSE. Manuscript and confidential reviewer files are excluded from the public repository."
 }
