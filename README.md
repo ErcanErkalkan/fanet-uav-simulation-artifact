@@ -32,9 +32,14 @@ Python AODV-like/OLSR-like routing models are **abstractions**, whereas ns-3 AOD
 
 The AirSim data represents a **recorded simulator trajectory**, not physical flight. Repeated network seeds over that fixed trajectory are not independent flights. DJI Tello support is optional; no Tello telemetry is claimed as validation for the provided comparisons. Recalculation from archived packet CSV is not a newly rerun simulation.
 
-## Archive
+## Archive and citation
 
-[Zenodo v1.0.0, DOI: 10.5281/zenodo.20369732](https://doi.org/10.5281/zenodo.20369732) is the **published original baseline**. The newer experiments in this repository are **not yet covered by that exact archive**. A subsequent GitHub release and Zenodo software version will have its own version-specific DOI; update the citation only after its publication.
+**Latest permanently archived release:** [FANET UAV Simulation Framework: Code and Reproducible Benchmarks, v1.1.0](https://doi.org/10.5281/zenodo.23830334), Zenodo DOI **10.5281/zenodo.23830334** (published 2026-10-31).
+
+- [GitHub release v1.1.0](https://github.com/ErcanErkalkan/fanet-uav-simulation-artifact/releases/tag/v1.1.0) provides the versioned project source and retained experimental/validation files.
+- [Zenodo v1.1.0](https://doi.org/10.5281/zenodo.23830334) is the immutable archive for that tagged software release.
+- [Zenodo v1.0.0](https://doi.org/10.5281/zenodo.20369732) remains available as the historical baseline; it does **not** represent the updated data and code.
+- Subsequent edits on GitHub `main` do **not** retroactively change the archived v1.1.0 release; cite the exact software version used.
 
 ## License and privacy
 
