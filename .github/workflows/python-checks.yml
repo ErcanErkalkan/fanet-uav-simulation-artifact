@@ -13,7 +13,9 @@ jobs:
           python-version: '3.13'
       - name: Install dependencies
         run: python -m pip install -r benchmarks/python/requirements.txt
-      - name: Syntax check
+      - name: Python syntax check
         run: python -m compileall -q FANET_UAV benchmarks
-      - name: Contract tests
-        run: python -m unittest discover -s benchmarks/python/tests -p test_metric_contract.py -v
+      - name: Metric, AirSim logger and trace-replay tests
+        run: python -m unittest discover -s benchmarks/python/tests -p 'test_*.py' -v
+      - name: ns-3 experiment driver unit tests
+        run: python -m unittest discover -s benchmarks/validation/ns3/tests -p 'test_*.py' -v
