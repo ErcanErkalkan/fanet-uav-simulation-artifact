@@ -1,7 +1,9 @@
-"""R2.4: paired synthetic trajectory/traffic, shared wireless realizations.
-Three comparisons: original 35m hard binary vs uncalibrated wireless, 35m-capped
-wireless, and equal-edge-budget strongest-wireless links (not same edge identities).
-Preserves original scientific model; NO claim of equivalent physical fidelity.
+"""Paired binary-range and probabilistic-wireless channel sensitivity benchmark.
+Five conditions use matched synthetic mobility and packet schedules: binary 35 m,
+unrestricted wireless, 35 m-capped wireless, identical binary candidate pairs,
+and top-K wireless edges matched to the binary candidate-edge budget.
+Packet-delivery draws use distinct mode-specific RNG streams. The experiment
+evaluates model sensitivity, not calibrated radio or physical-network fidelity.
 """
 from __future__ import annotations
 import sys, math, random, csv
