@@ -1,7 +1,9 @@
 cff-version: 1.2.0
-message: "Cite the exact archived software version used. The next Zenodo version-specific DOI should be added after publication."
+message: "Please cite the specific archived v1.1.0 software release using DOI 10.5281/zenodo.23830334."
 title: "FANET UAV Simulation Framework: Code and Reproducible Benchmarks"
 version: "1.1.0"
+date-released: "2026-10-31"
+doi: "10.5281/zenodo.23830334"
 type: software
 license: MIT
 repository-code: "https://github.com/ErcanErkalkan/fanet-uav-simulation-artifact"
