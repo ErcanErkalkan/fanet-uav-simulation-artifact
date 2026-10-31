@@ -1,0 +1,33 @@
+{
+  "ns3_release": "3.49",
+  "release_date": "2026-10-07",
+  "official_release_page": "https://www.nsnam.org/releases/ns-3-49/",
+  "archive_url": "https://www.nsnam.org/releases/ns-3.49.tar.bz2",
+  "archive_size_bytes": 47274211,
+  "archive_sha256": "81c9eb0839d2b527e9cc01db7eb0a521d8fc6a520ebb23d17f3a5c96e47b4d68",
+  "official_git_tag": "ns-3.49",
+  "official_git_commit": "418210e8914e9f6bcb5cddbcc94a2cecb7853b68",
+  "operating_system": "Ubuntu 24.04.4 LTS on WSL2",
+  "compiler": "g++ 13.3.0",
+  "cmake": "3.28.3",
+  "ninja": "1.11.1",
+  "python3": "3.12.3 (/usr/bin/python3)",
+  "git": "2.43.0",
+  "modules_requested": [
+    "core",
+    "network",
+    "mobility",
+    "wifi",
+    "internet",
+    "aodv",
+    "olsr",
+    "applications",
+    "flow-monitor"
+  ],
+  "build_status": "passed_750_of_750_actions",
+  "test_status": "passed_simulator_and_wifi_channel_settings_quick",
+  "smoke_status": "passed_all_four_cases",
+  "python_changed": false,
+  "r1_python_source_changed": false,
+  "airsim_source_csv_changed": false
+}

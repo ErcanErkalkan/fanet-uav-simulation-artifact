@@ -1,24 +1,21 @@
 cff-version: 1.2.0
-message: "If you use this software artifact, please cite it using the metadata below."
-title: "FANET UAV Simulation Artifact"
-version: "1.0.0"
-date-released: "2026-05-24"
+message: "Cite the exact archived software version used. The next Zenodo version-specific DOI should be added after publication."
+title: "FANET UAV Simulation Framework: Code and Reproducible Benchmarks"
+version: "1.1.0"
 type: software
 license: MIT
-doi: "10.5281/zenodo.20369732"
-url: "https://doi.org/10.5281/zenodo.20369732"
+repository-code: "https://github.com/ErcanErkalkan/fanet-uav-simulation-artifact"
+url: "https://github.com/ErcanErkalkan/fanet-uav-simulation-artifact"
 authors:
-  - family-names: "ERKALKAN"
+  - family-names: "Erkalkan"
     given-names: "Ercan"
-    affiliation: "Department of Computer Technologies, Marmara University, Vocational School of Technical Sciences"
+    affiliation: "Marmara University, Vocational School of Technical Sciences"
 keywords:
   - FANET
   - UAV
   - AirSim
+  - ns-3
   - routing
-  - wireless networks
-  - trace replay
   - simulation
-  - Python
-abstract: "Executable Python code and reproducible CSV data for a FANET-based UAV simulation framework with synthetic mobility, AirSim-compatible trace replay, routing abstractions, probabilistic wireless-channel metrics, and optional physical logging interfaces."
-repository-code: "https://github.com/ErcanErkalkan/fanet-uav-simulation-artifact"
+  - reproducibility
+abstract: "Python-based FANET UAV simulation, trace replay, routing and wireless benchmarks, and independently checkable network-simulator evidence."

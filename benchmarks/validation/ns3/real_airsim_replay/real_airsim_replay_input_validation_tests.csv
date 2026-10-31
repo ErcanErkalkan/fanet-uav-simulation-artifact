@@ -1,0 +1,12 @@
+test_name,result,details
+reject_invalid_csv_coordinate,passed,non-finite x_m: 'NaN'
+reject_nonmonotonic_time,passed,AirSim monotonic time is not strictly increasing
+ned_conversion_preserves_distances,passed,all three frame-0 pair distances preserved
+reject_duplicate_packet_id,passed,duplicate packet identity: 0
+reject_missing_packet_endpoint,passed,traffic endpoint is missing from mobility source
+map_schedule_to_node_ids,passed,packet ID and endpoints resolved
+zero_delivery_metrics,passed,PDR=0; latency=NA
+reject_deliveries_above_generated,passed,delivered packet count exceeds generated count
+same_seed_mobility_is_deterministic,passed,all exported coordinates match
+two_hop_reference_geometry,passed,80m source-target; 40m adjacent links; 50m gate
+source_ns3_coordinates_match_at_sample,passed,frame 10 exact after NED-to-Cartesian conversion

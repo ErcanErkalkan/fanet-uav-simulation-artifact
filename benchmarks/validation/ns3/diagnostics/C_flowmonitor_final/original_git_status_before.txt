@@ -1,0 +1,8 @@
+ M local_validation/2026-10-29/ns3/ns3_environment_report.md
+ M local_validation/2026-10-29/ns3/ns3_fanet_reference.cc
+ M local_validation/2026-10-29/ns3/ns3_reference_smoke.cc
+ M local_validation/2026-10-29/ns3/ns3_smoke_precision_audit.md
+ M local_validation/2026-10-29/ns3/ns3_smoke_test.log
+ M local_validation/2026-10-29/ns3/ns3_smoke_test_results.csv
+ M local_validation/2026-10-29/ns3/run_ns3_smoke_tests.sh
+?? local_validation/2026-10-29/ns3/diagnostics/

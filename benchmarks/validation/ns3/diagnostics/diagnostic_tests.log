@@ -1,0 +1,388 @@
+PROMPT 06 diagnostic ns-3 run log
+ns3_root=$HOME/ns3-work/ns-3.49
+RUN seed=20261029 run=1 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+[1/2] Building CXX object scratch/CMakeFiles/scratch_ns3_fanet_reference.dir/ns3_fanet_reference.cc.o
+[2/2] Linking CXX executable $HOME/ns3-work/ns-3.49/build/scratch/ns3.49-ns3_fanet_reference-default
+completed,D,aodv,20261029,1,150,150,150
+RUN seed=20261029 run=1 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,1,150,150,80
+RUN seed=20261030 run=2 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,2,150,150,150
+RUN seed=20261030 run=2 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,2,150,150,25
+RUN seed=20261031 run=3 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,3,150,150,150
+RUN seed=20261031 run=3 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,3,150,150,61
+RUN seed=20261032 run=4 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,4,150,150,150
+RUN seed=20261032 run=4 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,4,150,150,62
+RUN seed=20261033 run=5 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,5,150,150,150
+RUN seed=20261033 run=5 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,5,150,150,33
+RUN seed=20261034 run=6 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,6,150,150,150
+RUN seed=20261034 run=6 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,6,150,150,64
+RUN seed=20261035 run=7 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,7,150,150,150
+RUN seed=20261035 run=7 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,7,150,150,40
+RUN seed=20261036 run=8 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,8,150,150,150
+RUN seed=20261036 run=8 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,8,150,150,40
+RUN seed=20261037 run=9 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,9,150,150,150
+RUN seed=20261037 run=9 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,9,150,150,72
+RUN seed=20261038 run=10 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,10,150,150,150
+RUN seed=20261038 run=10 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,10,150,150,52
+RUN seed=20261039 run=11 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,11,150,150,150
+RUN seed=20261039 run=11 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,11,150,150,41
+RUN seed=20261040 run=12 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,12,150,150,150
+RUN seed=20261040 run=12 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,12,150,150,63
+RUN seed=20261041 run=13 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,13,150,150,150
+RUN seed=20261041 run=13 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,13,150,150,33
+RUN seed=20261042 run=14 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,14,150,150,150
+RUN seed=20261042 run=14 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,14,150,150,60
+RUN seed=20261043 run=15 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,15,150,150,150
+RUN seed=20261043 run=15 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,15,150,150,53
+RUN seed=20261044 run=16 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,16,150,150,150
+RUN seed=20261044 run=16 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,16,150,150,81
+RUN seed=20261045 run=17 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,17,150,150,150
+RUN seed=20261045 run=17 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,17,150,150,50
+RUN seed=20261046 run=18 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,18,150,150,150
+RUN seed=20261046 run=18 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,18,150,150,62
+RUN seed=20261047 run=19 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,19,150,150,150
+RUN seed=20261047 run=19 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,19,150,150,71
+RUN seed=20261048 run=20 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,20,150,150,150
+RUN seed=20261048 run=20 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,20,150,150,42
+RUN seed=20261049 run=21 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,21,150,150,150
+RUN seed=20261049 run=21 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,21,150,150,63
+RUN seed=20261050 run=22 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,22,150,150,150
+RUN seed=20261050 run=22 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,22,150,150,61
+RUN seed=20261051 run=23 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,23,150,150,150
+RUN seed=20261051 run=23 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,23,150,150,56
+RUN seed=20261052 run=24 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,24,150,150,150
+RUN seed=20261052 run=24 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,24,150,150,61
+RUN seed=20261053 run=25 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,25,150,150,150
+RUN seed=20261053 run=25 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,25,150,150,50
+RUN seed=20261054 run=26 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,26,150,150,150
+RUN seed=20261054 run=26 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,26,150,150,77
+RUN seed=20261055 run=27 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,27,150,150,150
+RUN seed=20261055 run=27 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,27,150,150,45
+RUN seed=20261056 run=28 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,28,150,150,150
+RUN seed=20261056 run=28 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,28,150,150,42
+RUN seed=20261057 run=29 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,29,150,150,150
+RUN seed=20261057 run=29 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,29,150,150,56
+RUN seed=20261058 run=30 routing=aodv warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,30,150,150,150
+RUN seed=20261058 run=30 routing=olsr warmup=5 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,30,150,150,62
+RUN seed=20261029 run=1 routing=aodv warmup=10 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,1,150,150,150
+RUN seed=20261029 run=1 routing=olsr warmup=10 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,1,150,150,81
+RUN seed=20261042 run=14 routing=aodv warmup=10 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,14,150,150,150
+RUN seed=20261042 run=14 routing=olsr warmup=10 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,14,150,150,69
+RUN seed=20261058 run=30 routing=aodv warmup=10 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,30,150,150,150
+RUN seed=20261058 run=30 routing=olsr warmup=10 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,30,150,150,90
+RUN seed=20261029 run=1 routing=aodv warmup=20 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,1,150,150,150
+RUN seed=20261029 run=1 routing=olsr warmup=20 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,1,150,150,91
+RUN seed=20261042 run=14 routing=aodv warmup=20 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,14,150,150,150
+RUN seed=20261042 run=14 routing=olsr warmup=20 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,14,150,150,70
+RUN seed=20261058 run=30 routing=aodv warmup=20 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,30,150,150,150
+RUN seed=20261058 run=30 routing=olsr warmup=20 drain=10 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,30,150,150,90
+RUN seed=20261029 run=1 routing=aodv warmup=5 drain=5 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,1,150,150,150
+RUN seed=20261029 run=1 routing=olsr warmup=5 drain=5 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,1,150,150,80
+RUN seed=20261042 run=14 routing=aodv warmup=5 drain=5 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,14,150,150,150
+RUN seed=20261042 run=14 routing=olsr warmup=5 drain=5 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,14,150,150,60
+RUN seed=20261058 run=30 routing=aodv warmup=5 drain=5 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,30,150,150,150
+RUN seed=20261058 run=30 routing=olsr warmup=5 drain=5 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,30,150,150,62
+RUN seed=20261029 run=1 routing=aodv warmup=5 drain=20 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,1,150,150,150
+RUN seed=20261029 run=1 routing=olsr warmup=5 drain=20 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,1,150,150,80
+RUN seed=20261042 run=14 routing=aodv warmup=5 drain=20 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,14,150,150,150
+RUN seed=20261042 run=14 routing=olsr warmup=5 drain=20 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,14,150,150,60
+RUN seed=20261058 run=30 routing=aodv warmup=5 drain=20 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,30,150,150,150
+RUN seed=20261058 run=30 routing=olsr warmup=5 drain=20 range=35
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,30,150,150,62
+RUN seed=20261029 run=1 routing=aodv warmup=5 drain=10 range=25
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,1,150,150,150
+RUN seed=20261029 run=1 routing=olsr warmup=5 drain=10 range=25
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,1,150,150,20
+RUN seed=20261042 run=14 routing=aodv warmup=5 drain=10 range=25
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,14,150,150,150
+RUN seed=20261042 run=14 routing=olsr warmup=5 drain=10 range=25
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,14,150,150,12
+RUN seed=20261058 run=30 routing=aodv warmup=5 drain=10 range=25
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,30,150,150,150
+RUN seed=20261058 run=30 routing=olsr warmup=5 drain=10 range=25
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,30,150,150,12
+RUN seed=20261029 run=1 routing=aodv warmup=5 drain=10 range=45
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,1,150,150,150
+RUN seed=20261029 run=1 routing=olsr warmup=5 drain=10 range=45
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,1,150,150,128
+RUN seed=20261042 run=14 routing=aodv warmup=5 drain=10 range=45
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,14,150,150,150
+RUN seed=20261042 run=14 routing=olsr warmup=5 drain=10 range=45
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,14,150,150,112
+RUN seed=20261058 run=30 routing=aodv warmup=5 drain=10 range=45
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,aodv,20261029,30,150,150,150
+RUN seed=20261058 run=30 routing=olsr warmup=5 drain=10 range=45
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+completed,D,olsr,20261029,30,150,150,123
+COMPLETED baseline_runs=60 sensitivity_conditions=54 unique_runs=96

@@ -1,0 +1,14 @@
+[
+  {
+    "seed": 20261029,
+    "routing": "aodv",
+    "exit": 0,
+    "output": "[0/2] Re-checking globbed directories...\nninja: no work to do.\ncompleted,C,aodv,20261029,1,599,599,599\n"
+  },
+  {
+    "seed": 20261029,
+    "routing": "olsr",
+    "exit": 0,
+    "output": "[0/2] Re-checking globbed directories...\nninja: no work to do.\ncompleted,C,olsr,20261029,1,599,599,599\n"
+  }
+]

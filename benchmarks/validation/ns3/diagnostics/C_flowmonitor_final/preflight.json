@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "historical_files": 152,
+  "source_sha256": "BDEDB8C09FDE29B9146C82E8B28512D6E995FD1DC495C7F9E4087B17145AA840",
+  "runner_sha256": "34389574CE70ECDEB55CEA14CD519B8DD1676389132E003095D7864D2896F1A4",
+  "airsim_sha256": "9C09B80E19CC6321BA61899565D34CA96EA4D0C02C3B0E0E4F969DD7F93115E3",
+  "traffic_schedules": 30,
+  "events_per_schedule": 599,
+  "mobility_rows": 1800,
+  "mobility_frames": 600,
+  "nodes": 3,
+  "branch": "revision/simpat-2026-validation",
+  "base_commit": "b6b58735ac28c180d661b8ca3ff8f4fbe66787ea",
+  "ns3_version": "3.49",
+  "python_version": "3.12.3",
+  "timestamp_utc": "2026-10-29T19:40:15.726504+00:00"
+}

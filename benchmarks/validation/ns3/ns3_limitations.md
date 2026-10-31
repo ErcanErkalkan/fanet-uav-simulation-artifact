@@ -1,0 +1,14 @@
+# ns-3 reference comparison limitations
+
+- The reference implementation is packet-level ns-3.49 using its standard AODV and OLSR modules. The R1 Python protocols are AODV-like and OLSR-like abstractions, not implementations of the same protocols.
+- The 35 m `RangePropagationLossModel` is a deterministic hard topology cutoff. It is not a calibrated radio channel, a measured link budget, or a physical equivalence claim.
+- The AirSim replay uses the original monotonic clock as its time axis: 119.7909209 s versus 118.283523328 s on the AirSim simulation clock. The 1.507397572 s difference is retained; no rescaling is applied.
+- All 600 AirSim mobility frames are fully connected under the 35 m cutoff. C validates trace ingestion and direct-link delivery but is not a multi-hop routing stress case.
+- D imports the same R1 `SyntheticMobility` coordinate traces into both frameworks. The source generator uses heading/velocity motion with boundary reflection, not RandomWaypoint. Positions are sampled at packet-evaluation frames without interpolation.
+- ns-3 delay is packet-level application send-to-receive and FlowMonitor delay is an IP-layer measure. R1 latency is model-based (base/per-hop/routing penalties plus seeded jitter); these latency metrics are not physically equivalent.
+- Application packet-identity delivery is the PDR numerator. UDP socket rejections are separated from accepted packets and later non-deliveries, with rejection cause left unattributed unless separately instrumented.
+- FlowMonitor Tx/Rx/loss counts are retained independently from application packet-identity counts. The official ns-3.49 documentation defines `lostPackets` as packets assumed lost when not reported for 10 seconds; packets queued below IP at simulation end can be counted as lost and may still count toward received or dropped packets. In these results, FlowMonitor `lostPackets` exceeded `max(Tx - Rx, 0)` in all 30 D/AODV runs. Do not treat it as the complement of Rx or as application loss: application unique-delivery IDs define PDR and application packets undelivered after drain define non-delivery. See the [official FlowMonitor documentation](https://www.nsnam.org/docs/release/3.49/models/html/flow-monitor.html).
+- ns-3 routing control-message and byte overhead is `NA`; this driver does not instrument control traffic. Python route-event counters are specific to its abstract state machine.
+- The ns-3 forwarding-derived hop estimate is not an exact per-packet hop count. R1 route hop counts are model path lengths.
+- Thirty repetitions are paired mobility/traffic/RNG replays, not 30 independent AirSim flights. In C the AirSim trajectory itself remains one fixed recorded flight.
+- The selected 802.11g/PHY/MAC settings are fixed and documented, but no calibration against AirSim radio behavior was performed.

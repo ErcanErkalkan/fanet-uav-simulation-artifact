@@ -1,0 +1,3 @@
+seed,routing,application_pdr_unchanged,old_delivered,new_delivered,old_application_pdr,new_application_pdr,old_delay_ms,new_delay_ms,old_flowmonitor_lost,corrected_flowmonitor_lost,old_flowmonitor_rx,corrected_flowmonitor_rx
+20261029,aodv,True,599,599,1.0,1.0,0.56450045576,0.56450045576,0,0,599,599
+20261029,olsr,True,599,599,1.0,1.0,0.565581933223,0.565581933223,0,0,599,599

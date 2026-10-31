@@ -1,187 +1,41 @@
-# FANET UAV Simulation Artifact
+# FANET UAV Simulation Framework
 
-## Current review-stage experiment snapshot (2026-10-29)
+**FANET simulation, UAV mobility replay, routing abstractions, probabilistic wireless channels, and packet-level validation.**
 
-The latest reproducibility and reviewer-oriented experimental evidence for manuscript **SIMPAT-D-26-1023** is kept as a **versioned additive snapshot** at [`revisions/2026-10-29/`](revisions/2026-10-29/).
+This is a neutral open-source research-software project, independent of any particular journal or manuscript. The intended sole active branch is `main`.
 
-The snapshot includes executable simulation and validation scripts, summary CSV data, vector charts, and a frozen ZIP package with **all raw experimental outputs, logs and manifests**. See [revision status](revisions/2026-10-29/REVISION_STATUS.md) for completed work and remaining limitations. This is **not** the final journal revision; the original published artifact and Zenodo DOI have not been overwritten. Original manuscript, reviewer response files and working LaTeX are retained in the private project Drive.
+## Project layout
 
+- [`FANET_UAV/`](FANET_UAV/): Python simulator, routing/channel benchmarks, trace replay and optional AirSim/DJI Tello data collection interfaces.
+- [`benchmarks/python/`](benchmarks/python/): Python reruns, metric contracts, sensitivity analysis and figures.
+- [`benchmarks/validation/airsim/`](benchmarks/validation/airsim/): recorded three-UAV AirSim simulator trajectory.
+- [`benchmarks/validation/real_airsim_replay/`](benchmarks/validation/real_airsim_replay/): repeatable Python replay of fixed AirSim mobility.
+- [`benchmarks/validation/ns3/`](benchmarks/validation/ns3/): ns-3.49 driver, schedules, packet audit, diagnostics, run records.
 
-This repository contains the executable code and reproducible data artifact for a Python-based FANET UAV simulation framework. It excludes manuscript source files, review notes, and writing-only material.
+## Start
 
-Persistent archive: https://doi.org/10.5281/zenodo.20369732
+Python 3.13+ is recommended. From the repository root:
 
-GitHub repository: https://github.com/ErcanErkalkan/fanet-uav-simulation-artifact
-
-## Contents
-
-- `FANET_UAV/*.py`: simulation, routing, wireless-channel, trace-replay, and optional logging scripts.
-- `FANET_UAV/*.csv`: generated raw and summary outputs, sample AirSim-compatible trajectory data, and sample replay outputs.
-- `figures/*.png`: manuscript figures generated from the distributed CSV outputs and the PlantUML architecture source.
-- `figures/*.puml`: editable PlantUML source for the colored architecture diagram.
-- `requirements.txt`: optional Python package dependencies.
-- `.zenodo.json`: Zenodo release metadata.
-- `CITATION.cff`: citation metadata for GitHub and Zenodo.
-
-## Environment
-
-- Tested with Python 3.14 on Windows.
-- Core benchmark scripts use only the Python standard library.
-- `matplotlib` is optional for the baseline latency plot.
-- `airsim` is optional and only required when collecting new AirSim trajectories.
-
-Install optional dependencies:
-
-```powershell
+```bash
 python -m pip install -r requirements.txt
+python FANET_UAV/fanet_simulator_core.py
+python -m pip install -r benchmarks/python/requirements.txt
+python -m unittest discover -s benchmarks/python/tests -p 'test_metric_contract.py' -v
+bash benchmarks/python/run_all.sh
 ```
 
-## Reproduce Included Outputs
+Full ns-3 and AirSim runs additionally require those simulators installed and configured. Review [benchmark instructions](benchmarks/python/README.md), [validation instructions](benchmarks/validation/README.md), and [provenance and interpretation](DATA_PROVENANCE.md).
 
-Run commands from the repository root.
+## Reproducibility boundaries
 
-### Minimal baseline
+Python AODV-like/OLSR-like routing models are **abstractions**, whereas ns-3 AODV/OLSR are separate protocol implementations. Python latency is model-based, ns-3 latency packet-level. A 35 m link cutoff is not an experimentally calibrated RF channel.
 
-```powershell
-Push-Location FANET_UAV
-python .\fanet_simulator_core.py
-Pop-Location
-```
+The AirSim data represents a **recorded simulator trajectory**, not physical flight. Repeated network seeds over that fixed trajectory are not independent flights. DJI Tello support is optional; no Tello telemetry is claimed as validation for the provided comparisons. Recalculation from archived packet CSV is not a newly rerun simulation.
 
-Output:
+## Archive
 
-- `FANET_UAV/fanet_results.csv`
+[Zenodo v1.0.0, DOI: 10.5281/zenodo.20369732](https://doi.org/10.5281/zenodo.20369732) is the **published original baseline**. The newer experiments in this repository are **not yet covered by that exact archive**. A subsequent GitHub release and Zenodo software version will have its own version-specific DOI; update the citation only after its publication.
 
-### Routing comparison
+## License and privacy
 
-```powershell
-python .\FANET_UAV\fanet_routing_protocols.py `
-  --uavs 5 10 20 `
-  --repetitions 30 `
-  --duration 120 `
-  --dt 1 `
-  --communication-range 35 `
-  --packets-per-step 5 `
-  --seed 2026 `
-  --raw-out .\FANET_UAV\fanet_routing_raw.csv `
-  --summary-out .\FANET_UAV\fanet_routing_summary.csv
-```
-
-Outputs:
-
-- `FANET_UAV/fanet_routing_raw.csv`
-- `FANET_UAV/fanet_routing_summary.csv`
-
-### Statistical sensitivity
-
-```powershell
-Push-Location FANET_UAV
-python .\fanet_statistical_sensitivity.py `
-  --repetitions 30 `
-  --duration 30 `
-  --dt 1 `
-  --protocol aodv_like_reactive `
-  --seed 5100 `
-  --raw-out .\fanet_statistical_raw.csv `
-  --summary-out .\fanet_statistical_summary.csv
-Pop-Location
-```
-
-Outputs:
-
-- `FANET_UAV/fanet_statistical_raw.csv`
-- `FANET_UAV/fanet_statistical_summary.csv`
-
-### Wireless-channel benchmark
-
-```powershell
-python .\FANET_UAV\fanet_wireless_channel_model.py `
-  --uavs 10 20 30 `
-  --repetitions 30 `
-  --seed-start 1000 `
-  --raw-out .\FANET_UAV\fanet_wireless_raw.csv `
-  --summary-out .\FANET_UAV\fanet_wireless_summary.csv
-```
-
-Outputs:
-
-- `FANET_UAV/fanet_wireless_raw.csv`
-- `FANET_UAV/fanet_wireless_summary.csv`
-
-### Unified synthetic/trace pipeline
-
-```powershell
-python .\FANET_UAV\fanet_unified_pipeline.py `
-  --matrix article `
-  --repetitions 30 `
-  --seed 7300 `
-  --raw-out .\FANET_UAV\fanet_unified_raw.csv `
-  --summary-out .\FANET_UAV\fanet_unified_summary.csv
-```
-
-Outputs:
-
-- `FANET_UAV/fanet_unified_raw.csv`
-- `FANET_UAV/fanet_unified_summary.csv`
-
-The matrix includes four scenarios:
-
-- synthetic mobility + binary link model + AODV-like routing
-- synthetic mobility + probabilistic wireless link model + AODV-like routing
-- AirSim-compatible sample trace + binary link model + AODV-like routing
-- AirSim-compatible sample trace + probabilistic wireless link model + AODV-like routing
-
-### AirSim-compatible topology replay
-
-```powershell
-Push-Location FANET_UAV
-python .\fanet_trace_replay.py `
-  --trace .\sample_airsim_trajectory_3uav.csv `
-  --range 35 `
-  --packets-per-sample 5 `
-  --seed 123 `
-  --out .\sample_airsim_replay_metrics.csv
-Pop-Location
-```
-
-Output:
-
-- `FANET_UAV/sample_airsim_replay_metrics.csv`
-
-## Optional External Interfaces
-
-### AirSim trajectory logging
-
-Requires AirSim and a running Unreal/AirSim multirotor environment.
-
-```powershell
-python .\FANET_UAV\airsim_trajectory_logger.py `
-  --vehicles Drone1 Drone2 Drone3 `
-  --duration 30 `
-  --sample-period 0.2 `
-  --out .\FANET_UAV\airsim_trajectory_3uav.csv
-```
-
-### DJI Tello logging
-
-Requires a DJI Tello connected through its SDK Wi-Fi network. Movement commands are not sent unless `--execute-flight-plan` is explicitly provided.
-
-```powershell
-python .\FANET_UAV\tello_validation_logger.py `
-  --duration 60 `
-  --out-dir .\FANET_UAV\tello_run_01
-```
-
-## Reproducibility Notes
-
-The included numerical outputs are generated from deterministic seeds and bundled sample data. External AirSim trajectory logs or DJI Tello telemetry logs are not required to reproduce the included CSV outputs.
-
-## License
-
-Code is licensed under the MIT License. Data files are licensed under CC BY 4.0; see `DATA_LICENSE`.
-
-## Citation
-
-Use the metadata in `CITATION.cff` or cite the archived Zenodo record:
-
-Erkalkan, E. (2026). FANET UAV Simulation Artifact. Zenodo. https://doi.org/10.5281/zenodo.20369732
+MIT for software; CC BY 4.0 for distributed data (`DATA_LICENSE`). Third-party simulators and libraries retain their original licenses. Private author files, editorial correspondence, and reviewer materials are outside the public repository.

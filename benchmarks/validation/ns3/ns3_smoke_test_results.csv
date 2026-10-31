@@ -1,0 +1,6 @@
+profile,scenario,routing,n_nodes,source_destination_distance_m,range_m,simulation_duration_s,packet_size_bytes,offered_packets,application_tx_packets,flow_tx_packets,flow_rx_packets,application_rx_packets,pdr,mean_delay_ms,legacy_integer_mean_delay_ms,times_forwarded,forwarding_based_hops_estimate,undelivered_at_end_packets,control_overhead_packets,seed,result
+range_limited_wifi,single-hop,global,2,20.000000,50.000000,20.000000,256,5,5,5,5,5,1.000000,1.348494,1.000000,0,1.000000,0,NA,20261029,passed
+range_limited_wifi,out-of-range,global,2,100.000000,50.000000,20.000000,256,5,5,5,0,0,0.000000,NA,NA,0,NA,5,NA,20261029,passed
+range_limited_wifi,linear-chain,aodv,3,80.000000,50.000000,20.000000,256,5,5,5,5,5,1.000000,3.462772,3.000000,6,2.200000,0,NA,20261029,passed
+range_limited_wifi,linear-chain,olsr,3,80.000000,50.000000,20.000000,256,5,5,5,5,5,1.000000,2.497172,2.000000,5,2.000000,0,NA,20261029,passed
+log_distance_wifi,single-hop,global,2,20.000000,50.000000,20.000000,256,5,5,5,5,5,1.000000,1.348494,1.000000,0,1.000000,0,NA,20261029,passed

@@ -1,0 +1,164 @@
+{
+  "status": "passed",
+  "started_utc": "2026-10-29T11:41:24.295951+00:00",
+  "finished_utc": "2026-10-29T11:42:56.073265+00:00",
+  "input_trace": {
+    "source_file": "airsim_real_3uav_120s.csv",
+    "source_sha256": "9C09B80E19CC6321BA61899565D34CA96EA4D0C02C3B0E0E4F969DD7F93115E3",
+    "source": "airsim",
+    "source_column_count": 19,
+    "source_columns": [
+      "time_s",
+      "monotonic_time_s",
+      "wall_elapsed_s",
+      "wall_time_utc",
+      "sim_time_stamp_ns",
+      "sequence",
+      "vehicle_name",
+      "node_id",
+      "x_m",
+      "y_m",
+      "z_m",
+      "vx_mps",
+      "vy_mps",
+      "vz_mps",
+      "flight_state",
+      "collision_state",
+      "collision_object",
+      "collision_time_stamp_ns",
+      "source"
+    ],
+    "source_row_count": 1800,
+    "frame_count": 600,
+    "vehicles": [
+      "Drone1",
+      "Drone2",
+      "Drone3"
+    ],
+    "rows_per_vehicle": {
+      "Drone1": 600,
+      "Drone2": 600,
+      "Drone3": 600
+    },
+    "sequence_contiguous": true,
+    "monotonic_timestamp_strictly_increasing_per_vehicle": true,
+    "simulation_timestamp_strictly_increasing_per_vehicle": true,
+    "position_and_velocity_finite": true,
+    "shared_ned_preserved": true,
+    "wall_elapsed_s_from_csv": 119.791126012,
+    "monotonic_elapsed_s": 119.7909209,
+    "air_sim_simulation_elapsed_s": 118.283523328,
+    "simulation_minus_wall_elapsed_s": -1.5076026840000054,
+    "replay_time_axis": "monotonic_time_s",
+    "replay_time_axis_reason": "Use per-sample monotonic wall-clock time for traffic scheduling; retain original AirSim simulation nanosecond timestamps as separate provenance and compare elapsed domains without rescaling."
+  },
+  "time_axis": {
+    "selected": "monotonic_time_s",
+    "air_sim_simulation_timestamp_ns": "retained and validated, not used as replay clock",
+    "wall_elapsed_s": 119.791126012,
+    "monotonic_elapsed_s": 119.7909209,
+    "simulation_elapsed_s": 118.283523328,
+    "simulation_minus_wall_s": -1.5076026840000054
+  },
+  "source_trace_validation": {
+    "all_19_columns_checked": true,
+    "rows": 1800,
+    "frames": 600,
+    "rows_per_vehicle": {
+      "Drone1": 600,
+      "Drone2": 600,
+      "Drone3": 600
+    },
+    "source_airsim_preserved": true,
+    "node_ids_and_vehicle_names_match": true,
+    "sequence_contiguous": true,
+    "all_positions_and_velocities_finite": true,
+    "monotonic_and_simulation_timestamps_increasing": true,
+    "shared_ned_coordinates_changed": false
+  },
+  "binary_topology_validation": {
+    "frames_checked": 600,
+    "binary_range_m": 35.0,
+    "possible_undirected_edges": 3,
+    "fully_connected_frames": 600,
+    "all_600_frames_fully_connected": true,
+    "pairwise_distance_ranges_m": {
+      "Drone1-Drone2": {
+        "minimum": 4.983255796313219,
+        "maximum": 5.017966415233492
+      },
+      "Drone1-Drone3": {
+        "minimum": 4.984513796958348,
+        "maximum": 5.009579278741887
+      },
+      "Drone2-Drone3": {
+        "minimum": 7.060176645663393,
+        "maximum": 7.08145867860032
+      }
+    },
+    "routing_claim_limit": "All pairs are within one hop under the binary 35 m model. These results do not demonstrate dynamic multi-hop routing success."
+  },
+  "traffic": {
+    "generation": "deterministic time-based",
+    "target_packets_per_second_total": 5.0,
+    "traffic_seed_rule": "repetition_seed + 119913",
+    "traffic_rng_independent_of_channel_rng": true,
+    "paired_source_destination_schedules_across_models": true,
+    "packet_events_written": 35820,
+    "source_destination_event_file": "real_airsim_replay_traffic_schedule.csv"
+  },
+  "experiment_design": {
+    "link_models": [
+      "binary",
+      "wireless",
+      "wireless_35m_cap"
+    ],
+    "binary_range_m": 35.0,
+    "routing_protocols": [
+      "aodv_like_reactive",
+      "olsr_like_proactive"
+    ],
+    "trace_resolutions": [
+      "5hz_original",
+      "1hz_derived"
+    ],
+    "derived_1hz_frames": 120,
+    "rng_repetitions_per_condition": 30,
+    "repetition_seed_range": [
+      20261029,
+      20261058
+    ],
+    "repetitions_are_independent_airsim_flights": false,
+    "total_runs": 360,
+    "conditions": 12,
+    "wireless_physical_calibration_claim": false,
+    "multi_hop_routing_claim": false
+  },
+  "statistical_method": {
+    "interval": "two-sided Student-t 95% confidence interval",
+    "reported_quantity": "half-width",
+    "degrees_of_freedom": 29,
+    "critical_value": 2.045229642132703,
+    "independent_observation_unit": "RNG-seeded replay run on the fixed trace"
+  },
+  "outputs": {
+    "real_airsim_replay_raw.csv": "real_airsim_replay_raw.csv",
+    "real_airsim_replay_summary.csv": "real_airsim_replay_summary.csv",
+    "real_airsim_replay_traffic_schedule.csv": "real_airsim_replay_traffic_schedule.csv",
+    "real_airsim_replay_comparison.png": "real_airsim_replay_comparison.png",
+    "real_airsim_replay_methodology.md": "real_airsim_replay_methodology.md",
+    "real_airsim_replay_run.log": "real_airsim_replay_run.log",
+    "R2_5_evidence_summary.md": "R2_5_evidence_summary.md",
+    "real_airsim_replay_validation.json": "real_airsim_replay_validation.json"
+  },
+  "outputs_sha256": {
+    "real_airsim_replay_raw.csv": "609E13B38070F31715140B6CC2EB06E5670866CE0196A1C7B44F6FE94B66C737",
+    "real_airsim_replay_summary.csv": "D25D242BC4B508927831B88107C58F82D2B006406916BD6F2266A7DF2A1A84ED",
+    "real_airsim_replay_traffic_schedule.csv": "2F68947B5C001B73CAB71437F2D525658D8A102BF391D5C4B78B00372135FC32",
+    "real_airsim_replay_comparison.png": "2E46F923D2374FA81322B1F51BCDB63BFF81C01F6EA1AA89D0346B181FA6F3D2",
+    "real_airsim_replay_methodology.md": "7ED6CF7C7C5DFA702106F9D81ACAF9410C12BBD4B1C4A4A73E357A6927F9B2C9",
+    "R2_5_evidence_summary.md": "EF70772521DB669F497790E0CC4CC184B19ED26E511C23B9E4537A59CC975ADB"
+  },
+  "source_hash_after_replay": "9C09B80E19CC6321BA61899565D34CA96EA4D0C02C3B0E0E4F969DD7F93115E3",
+  "source_hash_unchanged": true
+}

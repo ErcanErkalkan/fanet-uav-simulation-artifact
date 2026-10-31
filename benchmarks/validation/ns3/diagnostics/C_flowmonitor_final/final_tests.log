@@ -1,0 +1,81 @@
+
+R1_metrics_and_real_AirSim
+test_local_ned_translation_adds_signed_spawn_offsets (test_airsim_trajectory_logger.AirSimTrajectoryLoggerTests.test_local_ned_translation_adds_signed_spawn_offsets) ... ok
+test_nonfinite_common_coordinate_is_rejected (test_airsim_trajectory_logger.AirSimTrajectoryLoggerTests.test_nonfinite_common_coordinate_is_rejected) ... ok
+test_nonzero_orientation_is_rejected_without_verified_rotation (test_airsim_trajectory_logger.AirSimTrajectoryLoggerTests.test_nonzero_orientation_is_rejected_without_verified_rotation) ... ok
+test_safe_mission_uses_negative_z_and_compact_waypoints (test_airsim_trajectory_logger.AirSimTrajectoryLoggerTests.test_safe_mission_uses_negative_z_and_compact_waypoints) ... ok
+test_shared_coordinates_reproduce_settings_geometry (test_airsim_trajectory_logger.AirSimTrajectoryLoggerTests.test_shared_coordinates_reproduce_settings_geometry) ... ok
+test_binary_metrics_undefined_not_fake_sinr (test_metric_contract.MetricContractTests.test_binary_metrics_undefined_not_fake_sinr) ... ok
+test_broken_and_recovered_link_are_separate_episodes (test_metric_contract.MetricContractTests.test_broken_and_recovered_link_are_separate_episodes) ... ok
+test_ci_halfwidth (test_metric_contract.MetricContractTests.test_ci_halfwidth) ... ok
+test_initial_links_not_topology_changes (test_metric_contract.MetricContractTests.test_initial_links_not_topology_changes) ... ok
+test_nan_mean (test_metric_contract.MetricContractTests.test_nan_mean) ... ok
+test_no_completed_episodes_undefined (test_metric_contract.MetricContractTests.test_no_completed_episodes_undefined) ... ok
+test_recovered_legacy_flag_not_lost_packet (test_metric_contract.MetricContractTests.test_recovered_legacy_flag_not_lost_packet) ... ok
+test_route_unavailable_different_from_channel_failure (test_metric_contract.MetricContractTests.test_route_unavailable_different_from_channel_failure) ... ok
+test_routing_smoke_counters (test_metric_contract.MetricContractTests.test_routing_smoke_counters) ... ok
+test_unified_synthetic_model_consistency (test_metric_contract.MetricContractTests.test_unified_synthetic_model_consistency) ... ok
+test_wireless_conservation (test_metric_contract.MetricContractTests.test_wireless_conservation) ... ok
+test_binary_three_uav_topology_is_fully_connected_within_range (test_real_airsim_replay.RealAirSimReplayTests.test_binary_three_uav_topology_is_fully_connected_within_range) ... ok
+test_deterministic_time_based_traffic_is_independent_of_trace_rate (test_real_airsim_replay.RealAirSimReplayTests.test_deterministic_time_based_traffic_is_independent_of_trace_rate) ... ok
+test_nonincreasing_replay_time_is_rejected (test_real_airsim_replay.RealAirSimReplayTests.test_nonincreasing_replay_time_is_rejected) ... ok
+test_source_trace_is_real_air_sim_and_one_hz_derived_without_mutating_input (test_real_airsim_replay.RealAirSimReplayTests.test_source_trace_is_real_air_sim_and_one_hz_derived_without_mutating_input) ... ok
+test_trace_loader_preserves_air_sim_source_ned_and_zero_velocity (test_real_airsim_replay.RealAirSimReplayTests.test_trace_loader_preserves_air_sim_source_ned_and_zero_velocity) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.286s
+
+OK
+
+
+ns3_input_validation
+test_air_sim_named_three_node_trace_is_directly_connected (test_ns3_paired_experiments.PairedNs3ExperimentTests.test_air_sim_named_three_node_trace_is_directly_connected) ... ok
+test_flowmonitor_and_application_receive_counts_remain_distinct (test_ns3_paired_experiments.PairedNs3ExperimentTests.test_flowmonitor_and_application_receive_counts_remain_distinct) ... ok
+test_flowmonitor_assumed_loss_is_not_treated_as_rx_complement (test_ns3_paired_experiments.PairedNs3ExperimentTests.test_flowmonitor_assumed_loss_is_not_treated_as_rx_complement) ... ok
+test_linear_topology_distinguishes_multihop_from_unreachable (test_ns3_paired_experiments.PairedNs3ExperimentTests.test_linear_topology_distinguishes_multihop_from_unreachable) ... ok
+test_rejects_packet_audit_id_duplicates (test_ns3_paired_experiments.PairedNs3ExperimentTests.test_rejects_packet_audit_id_duplicates) ... ok
+test_student_t_interval_reports_half_width_and_na_for_one_sample (test_ns3_paired_experiments.PairedNs3ExperimentTests.test_student_t_interval_reports_half_width_and_na_for_one_sample) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.007s
+
+OK
+
+
+PROMPT06_diagnostics
+test_delay_thresholds_are_strictly_greater_than_cutoff (test_prompt06_diagnostics.Prompt06DiagnosticsTests.test_delay_thresholds_are_strictly_greater_than_cutoff) ... ok
+test_linear_interpolation_quantile (test_prompt06_diagnostics.Prompt06DiagnosticsTests.test_linear_interpolation_quantile) ... ok
+test_missing_evaluation_snapshot_is_not_fabricated (test_prompt06_diagnostics.Prompt06DiagnosticsTests.test_missing_evaluation_snapshot_is_not_fabricated) ... ok
+test_topology_shortest_hops_uses_evaluated_snapshot (test_prompt06_diagnostics.Prompt06DiagnosticsTests.test_topology_shortest_hops_uses_evaluated_snapshot) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.005s
+
+OK
+
+
+C_flowmonitor_final
+test_01_exactly_60_unique_main_runs (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_01_exactly_60_unique_main_runs) ... ok
+test_02_30_seeds_per_protocol (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_02_30_seeds_per_protocol) ... ok
+test_03_every_run_contains_599_generated_packet_events (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_03_every_run_contains_599_generated_packet_events) ... ok
+test_04_source_and_runner_sha256 (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_04_source_and_runner_sha256) ... ok
+test_05_frozen_prompt05_prompt06_data_unchanged (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_05_frozen_prompt05_prompt06_data_unchanged) ... ok
+test_06_all_C_input_hashes_match_original_settings (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_06_all_C_input_hashes_match_original_settings) ... ok
+test_07_protocols_use_same_packet_endpoints_and_timelines (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_07_protocols_use_same_packet_endpoints_and_timelines) ... ok
+test_08_application_delivery_and_pdr_match_prompt05 (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_08_application_delivery_and_pdr_match_prompt05) ... ok
+test_09_summary_and_packet_delays_match_prompt05 (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_09_summary_and_packet_delays_match_prompt05) ... ok
+test_10_socket_and_drain_counts_match (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_10_socket_and_drain_counts_match) ... ok
+test_11_flowmonitor_components_and_labels (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_11_flowmonitor_components_and_labels) ... ok
+test_12_runner_receipts_match_real_outputs (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_12_runner_receipts_match_real_outputs) ... ok
+test_13_student_t_interval_uses_repeat_means_and_df29 (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_13_student_t_interval_uses_repeat_means_and_df29) ... ok
+test_14_loss_mutation_is_reported_separately_from_application_metrics (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_14_loss_mutation_is_reported_separately_from_application_metrics) ... ok
+test_15_packet_delivery_and_delay_mutations_are_detected (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_15_packet_delivery_and_delay_mutations_are_detected) ... ok
+test_16_pilot_is_separate_and_successful (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_16_pilot_is_separate_and_successful) ... ok
+test_17_statistical_json_matches_independent_recomputation (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_17_statistical_json_matches_independent_recomputation) ... ok
+test_18_nonfinite_delay_and_changed_pdr_cannot_pass (test_C_flowmonitor_final.CFlowMonitorFinalTests.test_18_nonfinite_delay_and_changed_pdr_cannot_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 11.465s
+
+OK
+

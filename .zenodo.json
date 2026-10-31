@@ -1,27 +1,28 @@
 {
-  "title": "FANET UAV Simulation Artifact",
+  "title": "FANET UAV Simulation Framework: Code and Reproducible Benchmarks",
   "upload_type": "software",
-  "description": "Executable Python code and reproducible CSV data for a FANET-based UAV simulation framework with synthetic mobility, AirSim-compatible trace replay, routing abstractions, probabilistic wireless-channel metrics, and optional physical logging interfaces.",
+  "description": "Open-source Python FANET models, routing and wireless-channel benchmarks, UAV AirSim simulator trajectory replay, and paired ns-3 network validation code with provenance-aware data and documentation.",
   "creators": [
     {
       "name": "ERKALKAN, Ercan",
-      "affiliation": "Department of Computer Technologies, Marmara University, Vocational School of Technical Sciences"
+      "affiliation": "Marmara University, Vocational School of Technical Sciences"
     }
   ],
   "keywords": [
     "FANET",
     "UAV",
     "AirSim",
+    "ns-3",
     "wireless networks",
     "routing",
-    "trace replay",
     "simulation",
-    "Python",
-    "reproducibility"
+    "trajectory replay",
+    "reproducibility",
+    "Python"
   ],
   "license": "mit-license",
   "access_right": "open",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "language": "eng",
   "related_identifiers": [
     {
@@ -31,5 +32,5 @@
       "resource_type": "software"
     }
   ],
-  "notes": "Archived Zenodo DOI: 10.5281/zenodo.20369732. The repository intentionally excludes manuscript source files and writing-only review material. Bundled CSV outputs and sample traces are included for reproducibility; data files are also marked as CC BY 4.0 in DATA_LICENSE."
+  "notes": "Planned next archived release. Software MIT; independently licensed data CC BY 4.0 under DATA_LICENSE. Historical Zenodo v1.0.0 is a different, baseline snapshot. Editorial materials are excluded."
 }

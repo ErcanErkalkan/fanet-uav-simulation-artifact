@@ -1,0 +1,16 @@
+[0/2] Re-checking globbed directories...
+[1/2] Building CXX object scratch/CMakeFiles/scratch_ns3_reference_smoke.dir/ns3_reference_smoke.cc.o
+[2/2] Linking CXX executable /home/<user>/ns3-work/ns-3.49/build/scratch/ns3.49-ns3_reference_smoke-default
+RESULT,range_limited_wifi,single-hop,global,2,20.000000,50.000000,20.000000,256,5,5,5,5,5,1.000000,1.348494,1.000000,0,1.000000,0,NA,20261029,passed
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+RESULT,range_limited_wifi,out-of-range,global,2,100.000000,50.000000,20.000000,256,5,5,5,0,0,0.000000,NA,NA,0,NA,5,NA,20261029,passed
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+RESULT,range_limited_wifi,linear-chain,aodv,3,80.000000,50.000000,20.000000,256,5,5,5,5,5,1.000000,3.462772,3.000000,6,2.200000,0,NA,20261029,passed
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+RESULT,range_limited_wifi,linear-chain,olsr,3,80.000000,50.000000,20.000000,256,5,5,5,5,5,1.000000,2.497172,2.000000,5,2.000000,0,NA,20261029,passed
+[0/2] Re-checking globbed directories...
+ninja: no work to do.
+RESULT,log_distance_wifi,single-hop,global,2,20.000000,50.000000,20.000000,256,5,5,5,5,5,1.000000,1.348494,1.000000,0,1.000000,0,NA,20261029,passed
