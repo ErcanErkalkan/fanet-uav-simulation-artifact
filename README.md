@@ -4,6 +4,10 @@
 
 This is a neutral open-source research-software project, independent of any particular journal or manuscript. The intended sole active branch is `main`.
 
+## Framework architecture diagram
+
+[Current FANET framework architecture diagram (Figure 1)](figures/Figure1.jpg) shows configuration inputs, mobility and trace sources, UAV state management, link and routing models, experiment execution, metric collection, and reproducible outputs. The earlier PlantUML schematic and source remain in the repository for provenance; `figures/Figure1.jpg` is the current publication-quality architecture diagram. The image is retained unchanged from its supplied source.
+
 ## Project layout
 
 - [`FANET_UAV/`](FANET_UAV/): Python simulator, routing/channel benchmarks, trace replay and optional AirSim/DJI Tello data collection interfaces.
