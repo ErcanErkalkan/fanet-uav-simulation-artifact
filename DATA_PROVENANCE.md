@@ -6,6 +6,6 @@ The paired ns-3/Python audit includes a retained 89,880-row packet-event record 
 
 The AODV-like and OLSR-like Python models are abstractions; ns-3 AODV/OLSR are packet-level protocol implementations with different execution semantics. The modeled 35 m cutoff is not a calibrated physical radio model.
 
-The immutable [Zenodo v1.0.0 baseline](https://doi.org/10.5281/zenodo.20369732) is not the current expanded experiment snapshot. Before issuing a new archive, verify full C/D run trees, input data, exact source/runtime versions, hash manifests, license eligibility and the release-to-DOI linkage.
+The [Zenodo v1.1.0 software release](https://doi.org/10.5281/zenodo.23830334) permanently archives the tagged source snapshot and files distributed in the corresponding GitHub release. The [Zenodo v1.0.0 baseline](https://doi.org/10.5281/zenodo.20369732) remains a distinct earlier version. GitHub `main` may continue to change after v1.1.0 without modifying its permanent archive. For a fully independent simulator re-execution, verify full C/D run trees, source inputs, AirSim/ns-3 versions, hash manifests, and third-party licenses. Retained-output recalculation and complete simulator rerunning are different reproducibility levels.
 
 Source and output CSVs may have separately specified CC BY 4.0 rights. Third-party tools retain their licenses. Public repositories must not contain confidential editorial documents.
